@@ -1,1 +1,0 @@
-rh_msg_channel.o: rh_msg_channel.c rh_msg_channel.h
