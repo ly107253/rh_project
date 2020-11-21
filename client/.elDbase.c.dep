@@ -1,0 +1,1 @@
+elDbase.o: elDbase.c elDbase.h rh_msg_channel.h

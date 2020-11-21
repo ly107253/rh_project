@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<Model>
+	<Communication name="104转发参数" num="20">
+	    <do name="T0" tag="T0" value="30000"/>
+		<do name="T1" tag="T1" value="15000"/>
+	    <do name="T2" tag="T2" value="10000"/>
+	    <do name="T3" tag="T3" value="30000"/>
+		<do name="CommAddr" tag="CommAddr" value="0"/>
+		<do name="MeasureType" tag="MeasureType" value="13"/>
+		<do name="SignalType" tag="SignalType" value="1"/>
+		<do name="SignalWithTimeType" tag="SignalWithTimeType" value="17"/>
+		<do name="ControlType" tag="ControlType" value="45"/>
+		<do name="CI_MeasureType" tag="CI_MeasureType" value="13"/>
+		<do name="CI_SignalType" tag="CI_SignalType" value="1"/>
+		<do name="CI_PulseType" tag="CI_PulseType" value="15"/>
+		<do name="LocalIP" tag="LocalIP" value="192.168.2.10"/>	
+		<do name="RemoteIP" tag="RemoteIP" value="192.168.2.99"/>	
+		<do name="LocalPort" tag="LocalPort" value="2404"/>	 
+		<do name="RemotePort" tag="RemotePort" value="2404"/>	 
+		<do name="CI_PulseType" tag="CI_PulseType" value="15"/>
+		<do name="MeasureCnt" tag="MeasureCnt" value="15"/>	
+		<do name="SignalCnt" tag="SignalCnt" value="4"/>	
+		<do name="PulseCnt" tag="PulseCnt" value="0"/>	 
+		<do name="ControlCnt" tag="ControlCnt" value="0"/>	 
+	</Communication>
+	<IED_PARA name="设备参数" num="3">
+	   <para index="1" addr="201500110011" baud="4" proto="3" port="F2010201" password="00" rateNum="4" userType="4"  />
+	   <para index="2" addr="2" baud="4" proto="3" port="F2010201" password="00" rateNum="4" userType="4"  />
+	   <para index="3" addr="1" baud="6" proto="4" port="F2010202" password="00" rateNum="4" userType="4"  />	   
+	</IED_PARA>
+	<IED_CFG num="4">
+		<IED name="104转发设备" tag="104tstied" type="virtual">
+			<do name="遥测" tag="YC" num="28">
+				<do name="YC1" tag="YC1" path="104ied.YC.P" addr="0" type="float"/>
+				<do name="YC2" tag="YC2" path="104ied.YC.Q" addr="1" type="float"/>
+				<do name="YC3" tag="YC3" path="meter1.Meter_YC_Data.PhA_Val_Meter_Var_Data" addr="2" type="float"/>
+				<do name="YC4" tag="YC4" path="meter1.Meter_YC_Data.PhB_Val_Meter_Var_Data" addr="3" type="float"/>
+				<do name="YC5" tag="YC5" path="meter1.Meter_YC_Data.PhC_Val_Meter_Var_Data" addr="4" type="float"/>
+				<do name="YC6" tag="YC6" path="meter1.Meter_YC_Data.PhA_A_Meter_Var_Data" addr="5" type="float"/>
+				<do name="YC7" tag="YC7" path="meter1.Meter_YC_Data.PhB_A_Meter_Var_Data" addr="6" type="float"/>
+				<do name="YC8" tag="YC8" path="meter1.Meter_YC_Data.PhC_A_Meter_Var_Data" addr="7" type="float"/>
+				<do name="YC9" tag="YC9" path="meter1.Meter_YC_Data.Ins_Ph_P_Meter_Var_Data" addr="8" type="float"/>
+				<do name="YC10" tag="YC10" path="meter1.Meter_YC_Data.Ins_PhA_P_Meter_Var_Data" addr="9" type="float"/>
+				<do name="YC11" tag="YC11" path="meter1.Meter_YC_Data.Ins_PhB_P_Meter_Var_Data" addr="10" type="float"/>
+				<do name="YC12" tag="YC12" path="meter1.Meter_YC_Data.Ins_PhC_P_Meter_Var_Data" addr="11" type="float"/>
+				<do name="YC13" tag="YC13" path="meter1.Meter_YC_Data.Ins_Ph_Q_Meter_Var_Data" addr="12" type="float"/>
+				<do name="YC14" tag="YC14" path="meter1.Meter_YC_Data.Ins_PhA_Q_Meter_Var_Data" addr="13" type="float"/>
+				<do name="YC15" tag="YC15" path="meter1.Meter_YC_Data.Ins_PhB_Q_Meter_Var_Data" addr="14" type="float"/>
+				<do name="YC16" tag="YC16" path="meter1.Meter_YC_Data.Ins_PhC_Q_Meter_Var_Data" addr="15" type="float"/>
+				<do name="YC17" tag="YC17" path="meter1.Meter_YC_Data.Fac_Ph_P_Meter_Var_Data" addr="16" type="float"/>
+ 				<do name="YC18" tag="YC18" path="meter1.Meter_YC_Data.Fac_PhA_P_Meter_Var_Data" addr="17" type="float"/>
+				<do name="YC19" tag="YC19" path="meter1.Meter_YC_Data.Fac_PhB_P_Meter_Var_Data" addr="18" type="float"/>
+				<do name="YC20" tag="YC20" path="meter1.Meter_YC_Data.Fac_PhC_P_Meter_Var_Data" addr="19" type="float"/>
+				<do name="YC23" tag="YC23" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="22" type="float"/>
+				<do name="YC24" tag="YC24" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="23" type="float"/>
+				<do name="YC25" tag="YC25" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="24" type="float"/>
+				<do name="YC26" tag="YC26" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="25" type="float"/>
+				<do name="YC27" tag="YC27" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="26" type="float"/>
+				<do name="YC28" tag="YC28" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="27" type="float"/>
+				<do name="YC29" tag="YC29" path="endtermial1.End_Term_YC.R4_RQ_Cur_Pow_Data" addr="28" type="float"/>
+			</do>
+			<do name="遥信" tag="YX" num="9">
+				<do name="开入1" tag="YX1" path="104ied.YC.YX1" addr="0" type="bool"/>
+				<do name="开入2" tag="YX2" path="104ied.YC.YX2" addr="1" type="bool"/>
+				<do name="开入3" tag="YX3" path="104ied.YC.YX3" addr="2" type="bool"/>
+				<do name="开入4" tag="YX4" path="104ied.YC.YX4" addr="3" type="bool"/>
+				<do name="开入5" tag="YX5" path="endtermial1.End_Term_YX.CF_State_End_Term_YX" addr="5" type="int8"/>
+				<do name="开入6" tag="YX5" path="endtermial1.End_Term_YX.CF_Invalid_End_Term_YX" addr="6" type="int8"/>
+				<do name="开入7" tag="YX5" path="endtermial1.End_Term_YX.Move_State_End_Term_YX" addr="7" type="int8"/>
+				<do name="开入8" tag="YX5" path="endtermial1.End_Term_YX.Vol_Invalid_End_Term_YX" addr="8" type="int8"/>
+				<do name="开入9" tag="YX5" path="endtermial1.End_Term_YX.CF_Invalid_End_Term_YX" addr="9" type="int8"/>
+			</do>
+			<do name="遥脉" tag="YM" num="40">
+			    <do name="YM3" tag="YM3" path="meter1.Meter_Pow_Data.R0_PW_Cur_Pow_Data" addr="2" type="float"/>
+				<do name="YM4" tag="YM4" path="meter1.Meter_Pow_Data.R1_PW_Cur_Pow_Data" addr="3" type="float"/>
+				<do name="YM5" tag="YM5" path="meter1.Meter_Pow_Data.R2_PW_Cur_Pow_Data" addr="4" type="float"/>
+				<do name="YM6" tag="YM6" path="meter1.Meter_Pow_Data.R3_PW_Cur_Pow_Data" addr="5" type="float"/>
+				<do name="YM7" tag="YM7" path="meter1.Meter_Pow_Data.R4_PW_Cur_Pow_Data" addr="6" type="float"/>
+				<do name="YM8" tag="YM8" path="meter1.Meter_Pow_Data.R0_RW_Cur_Pow_Data" addr="7" type="float"/>
+				<do name="YM9" tag="YM9" path="meter1.Meter_Pow_Data.R1_RW_Cur_Pow_Data" addr="8" type="float"/>
+				<do name="YM10" tag="YM10" path="meter1.Meter_Pow_Data.R2_RW_Cur_Pow_Data" addr="9" type="float"/>
+				<do name="YM11" tag="YM11" path="meter1.Meter_Pow_Data.R3_RW_Cur_Pow_Data" addr="10" type="float"/>
+				<do name="YM12" tag="YM12" path="meter1.Meter_Pow_Data.R4_RW_Cur_Pow_Data" addr="11" type="float"/>
+				<do name="YM13" tag="YM13" path="meter1.Meter_Pow_Data.R0_PQ_Cur_Pow_Data" addr="12" type="float"/>
+				<do name="YM14" tag="YM14" path="meter1.Meter_Pow_Data.R1_PQ_Cur_Pow_Data" addr="13" type="float"/>
+				<do name="YM15" tag="YM15" path="meter1.Meter_Pow_Data.R2_PQ_Cur_Pow_Data" addr="14" type="float"/>
+				<do name="YM16" tag="YM16" path="meter1.Meter_Pow_Data.R3_PQ_Cur_Pow_Data" addr="15" type="float"/>
+				<do name="YM17" tag="YM17" path="meter1.Meter_Pow_Data.R4_PQ_Cur_Pow_Data" addr="16" type="float"/>
+ 				<do name="YM18" tag="YM18" path="meter1.Meter_Pow_Data.R0_RQ_Cur_Pow_Data" addr="17" type="float"/>
+				<do name="YM19" tag="YM19" path="meter1.Meter_Pow_Data.R1_RQ_Cur_Pow_Data" addr="18" type="float"/>
+				<do name="YM20" tag="YM20" path="meter1.Meter_Pow_Data.R2_RQ_Cur_Pow_Data" addr="19" type="float"/>
+				<do name="YM21" tag="YM21" path="meter1.Meter_Pow_Data.R3_RQ_Cur_Pow_Data" addr="20" type="float"/>
+				<do name="YM22" tag="YM22" path="meter1.Meter_Pow_Data.R4_RQ_Cur_Pow_Data" addr="21" type="float"/>  
+				<do name="YM23" tag="YM23" path="meter1.Meter_Pow_Data.R0_PW_Fro_Pow_Data" addr="22" type="float"/>
+				<do name="YM24" tag="YM24" path="meter1.Meter_Pow_Data.R1_PW_Fro_Pow_Data" addr="23" type="float"/>
+				<do name="YM25" tag="YM25" path="meter1.Meter_Pow_Data.R2_PW_Fro_Pow_Data" addr="24" type="float"/>
+				<do name="YM26" tag="YM26" path="meter1.Meter_Pow_Data.R3_PW_Fro_Pow_Data" addr="25" type="float"/>
+				<do name="YM27" tag="YM27" path="meter1.Meter_Pow_Data.R4_PW_Fro_Pow_Data" addr="26" type="float"/>
+				<do name="YM28" tag="YM28" path="meter1.Meter_Pow_Data.R0_RW_Fro_Pow_Data" addr="27" type="float"/>
+				<do name="YM29" tag="YM29" path="meter1.Meter_Pow_Data.R1_RW_Fro_Pow_Data" addr="28" type="float"/>
+				<do name="YM30" tag="YM30" path="meter1.Meter_Pow_Data.R2_RW_Fro_Pow_Data" addr="29" type="float"/>
+				<do name="YM31" tag="YM31" path="meter1.Meter_Pow_Data.R3_RW_Fro_Pow_Data" addr="30" type="float"/>
+				<do name="YM32" tag="YM32" path="meter1.Meter_Pow_Data.R4_RW_Fro_Pow_Data" addr="31" type="float"/>
+				<do name="YM33" tag="YM33" path="meter1.Meter_Pow_Data.R0_PQ_Fro_Pow_Data" addr="32" type="float"/>
+				<do name="YM34" tag="YM34" path="meter1.Meter_Pow_Data.R1_PQ_Fro_Pow_Data" addr="33" type="float"/>
+				<do name="YM35" tag="YM35" path="meter1.Meter_Pow_Data.R2_PQ_Fro_Pow_Data" addr="34" type="float"/>
+				<do name="YM36" tag="YM36" path="meter1.Meter_Pow_Data.R3_PQ_Fro_Pow_Data" addr="35" type="float"/>
+				<do name="YM37" tag="YM37" path="meter1.Meter_Pow_Data.R4_PQ_Fro_Pow_Data" addr="36" type="float"/>
+ 				<do name="YM38" tag="YM38" path="meter1.Meter_Pow_Data.R0_RQ_Fro_Pow_Data" addr="37" type="float"/>
+				<do name="YM39" tag="YM39" path="meter1.Meter_Pow_Data.R1_RQ_Fro_Pow_Data" addr="38" type="float"/>
+				<do name="YM40" tag="YM40" path="meter1.Meter_Pow_Data.R2_RQ_Fro_Pow_Data" addr="39" type="float"/>
+				<do name="YM41" tag="YM41" path="meter1.Meter_Pow_Data.R3_RQ_Fro_Pow_Data" addr="40" type="float"/>
+				<do name="YM42" tag="YM42" path="meter1.Meter_Pow_Data.R4_RQ_Fro_Pow_Data" addr="41" type="float"/>  
+            </do>				
+		</IED>
+		<IED name="104接入设备" tag="104ied" type="share" num="2" pn="0">
+			<do name="遥测" tag="YC" num="4" len="16">
+				<do name="P" tag="P" addr="0" type="float" offset="0" len="4"/>
+				<do name="Q" tag="Q" addr="1" type="float" offset="4" len="4"/>
+				<do name="U" tag="U" addr="2" type="float" offset="8" len="4"/>
+				<do name="I" tag="I" addr="3" type="float" offset="12" len="4"/>
+			</do>
+			<do name="遥信" tag="YX" num="4" len="4">
+				<do name="开入1" tag="YX1" addr="0" type="bool" offset="0" len="1"/>
+				<do name="开入2" tag="YX2" addr="1" type="bool" offset="1" len="1"/>
+				<do name="开入3" tag="YX3" addr="2" type="bool" offset="2" len="1"/>
+				<do name="开入4" tag="YX4" addr="3" type="bool" offset="3" len="1"/>
+			</do>
+		</IED>
+		<IED name="电表1" tag="meter1" type="share" num="2" pn="1">
+			<do name="遥脉电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="80"/>
+			<do name="遥测电能量数据" tag="Meter_YC_Data" type="struct" dotype="Meter_Var_Data" len="72"/>
+		</IED>
+		<IED name="电表2" tag="meter2" type="share" num="1" pn="2">
+			<do name="遥脉电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="80"/>
+		</IED>
+		<IED name="分支1" tag="endtermial1" type="share" num="2" pn="3">
+			<do name="分支遥信数据" tag="End_Term_YX" type="struct" dotype="End_Term_Data_YX" len="5"/>
+			<do name="分支遥测数据" tag="End_Term_YC" type="struct" dotype="End_Term_Data_YC" len="28"/>
+		</IED>
+	</IED_CFG>	
+	<DataTypeTempltes>
+		<baseValueType>
+			<do name="bool" maxlen="1"/>
+			<do name="int8" maxlen="1"/>
+			<do name="int16" maxlen="2"/>
+			<do name="int24" maxlen="3"/>
+			<do name="int32" maxlen="4"/>
+			<do name="int64" maxlen="8"/>
+			<do name="uint8" maxlen="1"/>
+			<do name="uint16" maxlen="2"/>
+			<do name="uint32" maxlen="4"/>
+			<do name="uint64" maxlen="8"/>
+			<do name="float" maxlen="4"/>
+			<do name="double" maxlen="8"/>
+			<do name="string" maxlen="255"/>
+			<do name="datetime" maxlen="8"/>
+		</baseValueType>
+		<doType name="电能量数据" tag="Pow_Data" num="40">
+	        <do name="正向有功费率0电能" tag="R0_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="0" len="4"/>
+			<do name="正向有功费率1电能" tag="R1_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="4" len="4"/>
+			<do name="正向有功费率2电能" tag="R2_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="8" len="4"/>
+			<do name="正向有功费率3电能" tag="R3_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="12" len="4"/>
+			<do name="正向有功费率4电能" tag="R4_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="16" len="4"/>
+		    <do name="反向有功费率0电能" tag="R0_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="20" len="4"/>
+			<do name="反向有功费率1电能" tag="R1_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="24" len="4"/>
+			<do name="反向有功费率2电能" tag="R2_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="28" len="4"/>
+			<do name="反向有功费率3电能" tag="R3_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="32" len="4"/>
+			<do name="反向有功费率4电能" tag="R4_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="36" len="4"/>
+		    <do name="组合无功1费率0电能" tag="R0_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="40" len="4"/>
+			<do name="组合无功1费率1电能" tag="R1_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="44" len="4"/>
+			<do name="组合无功1费率2电能" tag="R2_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="48" len="4"/>
+			<do name="组合无功1费率3电能" tag="R3_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="52" len="4"/>
+			<do name="组合无功1费率4电能" tag="R4_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="56" len="4"/>
+			<do name="组合无功2费率0电能" tag="R0_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="60" len="4"/>
+			<do name="组合无功2费率1电能" tag="R1_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="64" len="4"/>
+			<do name="组合无功2费率2电能" tag="R2_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="68" len="4"/>
+			<do name="组合无功2费率3电能" tag="R3_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="72" len="4"/>
+			<do name="组合无功2费率4电能" tag="R4_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="76" len="4"/>
+		    <do name="正向有功费率0电能" tag="R0_PW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="80" len="4"/>
+			<do name="正向有功费率1电能" tag="R1_PW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="84" len="4"/>
+			<do name="正向有功费率2电能" tag="R2_PW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="88" len="4"/>
+			<do name="正向有功费率3电能" tag="R3_PW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="92" len="4"/>
+			<do name="正向有功费率4电能" tag="R4_PW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="96" len="4"/>
+		    <do name="反向有功费率0电能" tag="R0_RW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="100" len="4"/>
+			<do name="反向有功费率1电能" tag="R1_RW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="104" len="4"/>
+			<do name="反向有功费率2电能" tag="R2_RW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="108" len="4"/>
+			<do name="反向有功费率3电能" tag="R3_RW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="112" len="4"/>
+			<do name="反向有功费率4电能" tag="R4_RW_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="116" len="4"/>
+		    <do name="组合无功1费率0电能" tag="R0_PQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="120" len="4"/>
+			<do name="组合无功1费率1电能" tag="R1_PQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="124" len="4"/>
+			<do name="组合无功1费率2电能" tag="R2_PQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="128" len="4"/>
+			<do name="组合无功1费率3电能" tag="R3_PQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="132" len="4"/>
+			<do name="组合无功1费率4电能" tag="R4_PQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="136" len="4"/>
+			<do name="组合无功2费率0电能" tag="R0_RQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="140" len="4"/>
+			<do name="组合无功2费率1电能" tag="R1_RQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="144" len="4"/>
+			<do name="组合无功2费率2电能" tag="R2_RQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="148" len="4"/>
+			<do name="组合无功2费率3电能" tag="R3_RQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="152" len="4"/>
+			<do name="组合无功2费率4电能" tag="R4_RQ_Fro_Pow_Data" type="array" dotype="float" dim="1" offset="156" len="4"/>
+
+		</doType>
+		<doType name="分支遥测数据" tag="End_Term_Data_YC" num="7">
+			<do name="装置在配置状态" tag="Phase_Vol_End_Term_YC" type="array" dotype="int8" dim="1" offset="0" len="4"/>
+			<do name="装置配置无效" tag="Phase_Amp_End_Term_YC" type="array" dotype="int8" dim="1" offset="4" len="4"/>
+			<do name="装置自检错误" tag="Phase_W_End_Term_YC" type="array" dotype="int8" dim="1" offset="8" len="4"/>
+			<do name="故障指示动作" tag="Phase_Q_End_Term_YC" type="array" dotype="int8" dim="1" offset="12" len="4"/>
+			<do name="相电压有压状态" tag="Temp_Mode_End_Term_YC" type="array" dotype="int8" dim="1" offset="16" len="4"/>	
+			<do name="故障指示动作" tag="Phase_Pro_Amp_End_Term_YC" type="array" dotype="int8" dim="1" offset="20" len="4"/>
+			<do name="相电压有压状态" tag="Phase_Mov_Amp_End_Term_YC" type="array" dotype="int8" dim="1" offset="24" len="4"/>	
+		</doType>
+		<doType name="分支遥信数据" tag="End_Term_Data_YX" num="5">
+		    <do name="装置在配置状态" tag="CF_State_End_Term_YX" type="array" dotype="int8" dim="1" offset="0" len="1"/>
+			<do name="装置配置无效" tag="CF_Invalid_End_Term_YX" type="array" dotype="int8" dim="1" offset="1" len="1"/>
+			<do name="装置自检错误" tag="SChk_Err_End_Term_YX" type="array" dotype="int8" dim="1" offset="2" len="1"/>
+			<do name="故障指示动作" tag="Move_State_End_Term_YX" type="array" dotype="int8" dim="1" offset="3" len="1"/>
+			<do name="相电压有压状态" tag="Vol_Invalid_End_Term_YX" type="array" dotype="int8" dim="1" offset="4" len="1"/>
+		</doType>
+		<doType name="电表实时变量" tag="Meter_Var_Data" num="18">
+		    <do name="A相值" tag="PhA_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="0" len="4"/>
+			<do name="B相值" tag="PhB_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="4" len="4"/>
+			<do name="C相值" tag="PhC_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="8" len="4"/>
+			<do name="A相电流" tag="PhA_A_Meter_Var_Data" type="array" dotype="float" dim="1" offset="12" len="4"/>
+			<do name="B相电流" tag="PhB_A_Meter_Var_Data" type="array" dotype="float" dim="1" offset="16" len="4"/>
+			<do name="C相电流" tag="PhC_A_Meter_Var_Data" type="array" dotype="float" dim="1" offset="20" len="4"/>
+			<do name="瞬时总有功功率" tag="Ins_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="24" len="4"/>
+			<do name="瞬时A相有功功率" tag="Ins_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="28" len="4"/>
+			<do name="瞬时B相有功功率" tag="Ins_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="32" len="4"/>
+			<do name="瞬时C相有功功率" tag="Ins_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="36" len="4"/>
+			<do name="瞬时总无功功率" tag="Ins_Ph_Q_Meter_Var_Data" type="array" dotype="float" dim="1" offset="40" len="4"/>
+			<do name="瞬时A相无功功率" tag="Ins_PhA_Q_Meter_Var_Data" type="array" dotype="float" dim="1" offset="44" len="4"/>
+			<do name="瞬时B相无功功率" tag="Ins_PhB_Q_Meter_Var_Data" type="array" dotype="float" dim="1" offset="48" len="4"/>
+			<do name="瞬时C相无功功率" tag="Ins_PhC_Q_Meter_Var_Data" type="array" dotype="float" dim="1" offset="52" len="4"/>
+			<do name="总功率因数" tag="Fac_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="56" len="4"/>
+			<do name="A相功率因数" tag="Fac_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="60" len="4"/>
+			<do name="B相功率因数" tag="Fac_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="64" len="4"/>
+			<do name="C相功率因数" tag="Fac_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="68" len="4"/>
+		</doType>
+	</DataTypeTempltes>
+	<ID_CFG num="70">
+		<do name="Meter_YC_Data" tag="PhA_Val_Meter_Var_Data" id="02010100"/>
+		<do name="Meter_YC_Data" tag="PhB_Val_Meter_Var_Data" id="02010200"/>
+		<do name="Meter_YC_Data" tag="PhC_Val_Meter_Var_Data" id="02010300"/>
+		<do name="Meter_YC_Data" tag="PhA_A_Meter_Var_Data" id="02020100"/>
+		<do name="Meter_YC_Data" tag="PhB_A_Meter_Var_Data" id="02020200"/>
+		<do name="Meter_YC_Data" tag="PhC_A_Meter_Var_Data" id="02020300"/>
+		<do name="Meter_YC_Data" tag="Ins_Ph_P_Meter_Var_Data" id="02030000" />
+		<do name="Meter_YC_Data" tag="Ins_PhA_P_Meter_Var_Data" id="02030100"/>
+		<do name="Meter_YC_Data" tag="Ins_PhB_P_Meter_Var_Data" id="02030200"/>
+		<do name="Meter_YC_Data" tag="Ins_PhC_P_Meter_Var_Data" id="02030300"/>
+		<do name="Meter_YC_Data" tag="Ins_Ph_Q_Meter_Var_Data" id="02040000"/>
+		<do name="Meter_YC_Data" tag="Ins_PhA_Q_Meter_Var_Data" id="02040100"/>
+		<do name="Meter_YC_Data" tag="Ins_PhB_Q_Meter_Var_Data" id="02040200"/>
+		<do name="Meter_YC_Data" tag="Ins_PhC_Q_Meter_Var_Data" id="02040300"/>
+		<do name="Meter_YC_Data" tag="Fac_Ph_P_Meter_Var_Data" id="02060000"/>
+		<do name="Meter_YC_Data" tag="Fac_PhA_P_Meter_Var_Data" id="02060100" />
+		<do name="Meter_YC_Data" tag="Fac_PhB_P_Meter_Var_Data" id="02060200" />
+		<do name="Meter_YC_Data" tag="Fac_PhC_P_Meter_Var_Data" id="02060300" />
+		<do name="Meter_Pow_Data" tag="R0_PW_Cur_Pow_Data" id="00010000"/>
+		<do name="Meter_Pow_Data" tag="R1_PW_Cur_Pow_Data" id="00010100"/>
+		<do name="Meter_Pow_Data" tag="R2_PW_Cur_Pow_Data" id="00010200"/>
+		<do name="Meter_Pow_Data" tag="R3_PW_Cur_Pow_Data" id="00010300"/>
+		<do name="Meter_Pow_Data" tag="R4_PW_Cur_Pow_Data" id="00010400"/>
+		<do name="Meter_Pow_Data" tag="R0_RW_Cur_Pow_Data" id="00020000"/>
+		<do name="Meter_Pow_Data" tag="R1_RW_Cur_Pow_Data" id="00020100"/>
+		<do name="Meter_Pow_Data" tag="R2_RW_Cur_Pow_Data" id="00020200"/>
+		<do name="Meter_Pow_Data" tag="R3_RW_Cur_Pow_Data" id="00020300"/>
+		<do name="Meter_Pow_Data" tag="R4_RW_Cur_Pow_Data" id="00020400"/>
+		<do name="Meter_Pow_Data" tag="R0_PQ_Cur_Pow_Data" id="00030000"/>
+		<do name="Meter_Pow_Data" tag="R1_PQ_Cur_Pow_Data" id="00030100"/>
+		<do name="Meter_Pow_Data" tag="R2_PQ_Cur_Pow_Data" id="00030200"/>
+		<do name="Meter_Pow_Data" tag="R3_PQ_Cur_Pow_Data" id="00030300"/>
+		<do name="Meter_Pow_Data" tag="R4_PQ_Cur_Pow_Data" id="00030400"/>
+		<do name="Meter_Pow_Data" tag="R0_RQ_Cur_Pow_Data" id="00040000"/>
+		<do name="Meter_Pow_Data" tag="R1_RQ_Cur_Pow_Data" id="00040100"/>
+		<do name="Meter_Pow_Data" tag="R2_RQ_Cur_Pow_Data" id="00040200"/>
+		<do name="Meter_Pow_Data" tag="R3_RQ_Cur_Pow_Data" id="00040300"/>
+		<do name="Meter_Pow_Data" tag="R4_RQ_Cur_Pow_Data" id="00040400"/>
+		<do name="Meter_Pow_Data" tag="R0_PW_Fro_Pow_Data" id="56110000"/>
+		<do name="Meter_Pow_Data" tag="R1_PW_Fro_Pow_Data" id="56110100"/>
+		<do name="Meter_Pow_Data" tag="R2_PW_Fro_Pow_Data" id="56110200"/>
+		<do name="Meter_Pow_Data" tag="R3_PW_Fro_Pow_Data" id="56110300"/>
+		<do name="Meter_Pow_Data" tag="R4_PW_Fro_Pow_Data" id="56110400"/>
+		<do name="Meter_Pow_Data" tag="R0_RW_Fro_Pow_Data" id="56120000"/>
+		<do name="Meter_Pow_Data" tag="R1_RW_Fro_Pow_Data" id="56120100"/>
+		<do name="Meter_Pow_Data" tag="R2_RW_Fro_Pow_Data" id="56120200"/>
+		<do name="Meter_Pow_Data" tag="R3_RW_Fro_Pow_Data" id="56120300"/>
+		<do name="Meter_Pow_Data" tag="R4_RW_Fro_Pow_Data" id="56120400"/>
+		<do name="Meter_Pow_Data" tag="R0_PQ_Fro_Pow_Data" id="56130000"/>
+		<do name="Meter_Pow_Data" tag="R1_PQ_Fro_Pow_Data" id="56130100"/>
+		<do name="Meter_Pow_Data" tag="R2_PQ_Fro_Pow_Data" id="56130200"/>
+		<do name="Meter_Pow_Data" tag="R3_PQ_Fro_Pow_Data" id="56130300"/>
+		<do name="Meter_Pow_Data" tag="R4_PQ_Fro_Pow_Data" id="56130400"/>
+		<do name="Meter_Pow_Data" tag="R0_RQ_Fro_Pow_Data" id="56140000"/>
+		<do name="Meter_Pow_Data" tag="R1_RQ_Fro_Pow_Data" id="56140100"/>
+		<do name="Meter_Pow_Data" tag="R2_RQ_Fro_Pow_Data" id="56140200"/>
+		<do name="Meter_Pow_Data" tag="R3_RQ_Fro_Pow_Data" id="56140300"/>
+		<do name="Meter_Pow_Data" tag="R4_RQ_Fro_Pow_Data" id="56140400"/>
+		<do name="End_Term_YC" tag="Phase_Vol_End_Term_YC" id="DD020000"/>
+		<do name="End_Term_YC" tag="Phase_Amp_End_Term_YC" id="DD020100"/>
+		<do name="End_Term_YC" tag="Phase_W_End_Term_YC" id="DD020200"/>
+		<do name="End_Term_YC" tag="Phase_Q_End_Term_YC" id="DD020300"/>
+		<do name="End_Term_YC" tag="Temp_Mode_End_Term_YC" id="DD020400"/>
+		<do name="End_Term_YC" tag="Phase_Pro_Amp_End_Term_YC" id="DD020500"/>
+		<do name="End_Term_YC" tag="Phase_Mov_Amp_End_Term_YC" id="DD020600"/>
+		<do name="End_Term_YX" tag="CF_State_End_Term_YX" id="DD020700"/>
+		<do name="End_Term_YX" tag="CF_Invalid_End_Term_YX" id="DD020800"/>
+		<do name="End_Term_YX" tag="SChk_Err_End_Term_YX" id="DD020900"/>
+		<do name="End_Term_YX" tag="Move_State_End_Term_YX" id="DD020A00"/>
+		<do name="End_Term_YX" tag="Vol_Invalid_End_Term_YX" id="DD020B00"/>
+	</ID_CFG>
+</Model>

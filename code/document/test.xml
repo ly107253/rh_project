@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<Model>
+	<Communication>
+		<channel name="通道1" type="645" configuration="com1:9600,n,8,1" host="192.168.0.1" app="app_645">
+			<ied name="meter1" addr="1"/>
+			<ied name="meter2" addr="2"/>
+		</channel>
+		<channel name="通道2" type="104" configuration="192.168.0.100:2404" host="192.168.0.1" app="app_104">
+			<ied name="104ied" addr="1"/>
+		</channel>
+		<channel name="通道3" type="104tst" configuration="192.168.1.100:2404" host="192.168.0.1" app="app_104tst">
+			<ied name="104tstied" addr="1"/>
+		</channel>
+	</Communication>
+	<IED_CFG num="4">
+		<IED name="104转发设备" tag="104tstied" type="virtual">
+			<do name="遥测" tag="YC" num="22">
+				<do name="YC1" tag="YC1" path="104ied.YC.P" addr="0" type="float"/>
+				<do name="YC2" tag="YC2" path="104ied.YC.Q" addr="1" type="float"/>
+				<do name="YC3" tag="YC3" path="meter1.Meter_Pow_Data.R0_PW_Cur_Pow_Data" addr="2" type="float"/>
+				<do name="YC4" tag="YC4" path="meter1.Meter_Pow_Data.R1_PW_Cur_Pow_Data" addr="3" type="float"/>
+				<do name="YC5" tag="YC5" path="meter1.Meter_Pow_Data.R2_PW_Cur_Pow_Data" addr="4" type="float"/>
+				<do name="YC6" tag="YC6" path="meter1.Meter_Pow_Data.R3_PW_Cur_Pow_Data" addr="5" type="float"/>
+				<do name="YC7" tag="YC7" path="meter1.Meter_Pow_Data.R4_PW_Cur_Pow_Data" addr="6" type="float"/>
+				<do name="YC8" tag="YC8" path="meter1.Meter_Pow_Data.R0_RW_Cur_Pow_Data" addr="7" type="float"/>
+				<do name="YC9" tag="YC9" path="meter1.Meter_Pow_Data.R1_RW_Cur_Pow_Data" addr="8" type="float"/>
+				<do name="YC10" tag="YC10" path="meter1.Meter_Pow_Data.R2_RW_Cur_Pow_Data" addr="9" type="float"/>
+				<do name="YC11" tag="YC11" path="meter1.Meter_Pow_Data.R3_RW_Cur_Pow_Data" addr="10" type="float"/>
+				<do name="YC12" tag="YC12" path="meter1.Meter_Pow_Data.R4_RW_Cur_Pow_Data" addr="11" type="float"/>
+				<do name="YC13" tag="YC13" path="meter1.Meter_Pow_Data.R0_PQ_Cur_Pow_Data" addr="12" type="float"/>
+				<do name="YC14" tag="YC14" path="meter1.Meter_Pow_Data.R1_PQ_Cur_Pow_Data" addr="13" type="float"/>
+				<do name="YC15" tag="YC15" path="meter1.Meter_Pow_Data.R2_PQ_Cur_Pow_Data" addr="14" type="float"/>
+				<do name="YC16" tag="YC16" path="meter1.Meter_Pow_Data.R3_PQ_Cur_Pow_Data" addr="15" type="float"/>
+				<do name="YC17" tag="YC17" path="meter1.Meter_Pow_Data.R4_PQ_Cur_Pow_Data" addr="16" type="float"/>
+ 				<do name="YC18" tag="YC18" path="meter1.Meter_Pow_Data.R0_RQ_Cur_Pow_Data" addr="17" type="float"/>
+				<do name="YC19" tag="YC19" path="meter1.Meter_Pow_Data.R1_RQ_Cur_Pow_Data" addr="18" type="float"/>
+				<do name="YC20" tag="YC20" path="meter1.Meter_Pow_Data.R2_RQ_Cur_Pow_Data" addr="19" type="float"/>
+				<do name="YC21" tag="YC21" path="meter1.Meter_Pow_Data.R3_RQ_Cur_Pow_Data" addr="20" type="float"/>
+				<do name="YC22" tag="YC22" path="meter1.Meter_Pow_Data.R4_RQ_Cur_Pow_Data" addr="21" type="float"/>             
+			</do>
+			<do name="遥信" tag="YX" num="4">
+				<do name="开入1" tag="YX1" path="104ied.YC.YX1" addr="0" type="bool"/>
+				<do name="开入2" tag="YX2" path="104ied.YC.YX2" addr="1" type="bool"/>
+				<do name="开入3" tag="YX3" path="104ied.YC.YX3" addr="2" type="bool"/>
+				<do name="开入4" tag="YX4" path="104ied.YC.YX4" addr="3" type="bool"/>
+			</do>
+		</IED>
+		<IED name="104接入设备" tag="104ied" type="share" num="2" pn="0">
+			<do name="遥测" tag="YC" num="4" len="16">
+				<do name="P" tag="P" addr="0" type="float" offset="0" len="4"/>
+				<do name="Q" tag="Q" addr="1" type="float" offset="4" len="4"/>
+				<do name="U" tag="U" addr="2" type="float" offset="8" len="4"/>
+				<do name="I" tag="I" addr="3" type="float" offset="12" len="4"/>
+			</do>
+			<do name="遥信" tag="YX" num="4" len="4">
+				<do name="开入1" tag="YX1" addr="0" type="bool" offset="0" len="1"/>
+				<do name="开入2" tag="YX2" addr="1" type="bool" offset="1" len="1"/>
+				<do name="开入3" tag="YX3" addr="2" type="bool" offset="2" len="1"/>
+				<do name="开入4" tag="YX4" addr="3" type="bool" offset="3" len="1"/>
+			</do>
+		</IED>
+		<IED name="电表1" tag="meter1" type="share" num="1" pn="1">
+			<do name="电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="80"/>
+		</IED>
+		<IED name="电表2" tag="meter2" type="share" num="1" pn="2">
+			<do name="电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="80"/>
+		</IED>
+	</IED_CFG>	
+	<DataTypeTempltes>
+		<baseValueType>
+			<do name="bool" maxlen="1"/>
+			<do name="int8" maxlen="1"/>
+			<do name="int16" maxlen="2"/>
+			<do name="int24" maxlen="3"/>
+			<do name="int32" maxlen="4"/>
+			<do name="int64" maxlen="8"/>
+			<do name="uint8" maxlen="1"/>
+			<do name="uint16" maxlen="2"/>
+			<do name="uint32" maxlen="4"/>
+			<do name="uint64" maxlen="8"/>
+			<do name="float" maxlen="4"/>
+			<do name="double" maxlen="8"/>
+			<do name="string" maxlen="255"/>
+			<do name="datetime" maxlen="8"/>
+		</baseValueType>
+		<doType name="总电能" tag="Total_Pow">
+			<do name="关联总电能" tag="Total_Link_Pow" type="float"/>
+			<do name="正向有功基波总电能" tag="Total_PFW_Pow" type="float"/>
+			<do name="反向有功基波总电能" tag="Total_RFW_Pow" type="float"/>
+			<do name="正向有功谐波总电能" tag="Total_PHW_Pow" type="float"/>
+			<do name="反向有功谐波总电能" tag="Total_RHW_Pow" type="float"/>
+			<do name="铜损有功总电能补偿量" tag="Total_CLW_Pow" type="float"/>
+			<do name="铁损有功总电能补偿量" tag="Total_ILW_Pow" type="float"/>
+		</doType>
+		<doType name="相电能" tag="Ph_Pow">
+			<do name="正向有功电能" tag="Ph_PW_Pow" type="float"/>
+			<do name="反向有功电能" tag="Ph_RW_Pow" type="float"/>
+			<do name="组合无功1电能" tag="Ph_CR1_Pow" type="float"/>
+			<do name="组合无功2电能" tag="Ph_CR2_Pow" type="float"/>
+			<do name="第一象限无功电能" tag="Ph_QR1_Pow" type="float"/>
+			<do name="第二象限无功电能" tag="Ph_QR2_Pow" type="float"/>
+			<do name="第三象限无功电能" tag="Ph_QR3_Pow" type="float"/>
+			<do name="第四象限无功电能" tag="Ph_QR4_Pow" type="float"/>
+			<do name="正向视在电能" tag="Ph_PV_Pow" type="float"/>
+			<do name="反向视在电能" tag="Ph_RV_Pow" type="float"/>
+			<do name="关联电能" tag="Ph_Link_Pow" type="float"/>
+			<do name="正向有功基波电能" tag="Ph_PFW_Pow" type="float"/>
+			<do name="反向有功基波电能" tag="Ph_RFW_Pow" type="float"/>
+			<do name="正向有功谐波电能" tag="Ph_PHW_Pow" type="float"/>
+			<do name="反向有功谐波电能" tag="Ph_RHW_Pow" type="float"/>
+			<do name="铜损有功电能补偿量" tag="Ph_CLW_Pow" type="float"/>
+			<do name="铁损有功电能补偿量" tag="Ph_ILW_Pow" type="float"/>
+		</doType>
+		<doType name="剩余透支值" tag="Ro_Val">
+			<do name="剩余值" tag="Ro_R_Val" type="float"/>
+			<do name="透支值" tag="Ro_O_Val" type="float"/>
+		</doType>
+		<doType name="结算日电能量数据" tag="Sd_Pow_Data">
+			<do name="组合有功电能量数据" tag="Sd_CW_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="正向有功电能量数据" tag="Sd_PW_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="反向有功电能量数据" tag="Sd_RW_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="组合无功1电能量数据" tag="Sd_CR1_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="组合无功2电能量数据" tag="Sd_CR2_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="第一象限无功电能量数据" tag="Sd_QR1_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="第二象限无功电能量数据" tag="Sd_QR2_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="第三象限无功电能量数据" tag="Sd_QR3_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="第四象限无功电能量数据" tag="Sd_QR4_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="正向视在电能量数据" tag="Sd_PV_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="反向视在电能量数据" tag="Sd_RV_Pow_Data" type="array" dotype="float" dim="64"/>
+			<do name="总电能量数据" tag="Sd_Total_Pow_Data" type="struct" dotype="Total_Pow"/>
+			<do name="A相电能量数据" tag="Sd_PhA_Pow_Data" type="struct" dotype="Ph_Pow"/>
+			<do name="B相电能量数据" tag="Sd_PhB_Pow_Data" type="struct" dotype="Ph_Pow"/>
+			<do name="C相电能量数据" tag="Sd_PhC_Pow_Data" type="struct" dotype="Ph_Pow"/>
+		</doType>
+		<doType name="电能量数据" tag="Pow_Data" num="20">
+	        <do name="正向有功费率0电能" tag="R0_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="0" len="4"/>
+			<do name="正向有功费率1电能" tag="R1_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="4" len="4"/>
+			<do name="正向有功费率2电能" tag="R2_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="8" len="4"/>
+			<do name="正向有功费率3电能" tag="R3_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="12" len="4"/>
+			<do name="正向有功费率4电能" tag="R4_PW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="16" len="4"/>
+		    <do name="反向有功费率0电能" tag="R0_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="20" len="4"/>
+			<do name="反向有功费率1电能" tag="R1_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="24" len="4"/>
+			<do name="反向有功费率2电能" tag="R2_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="28" len="4"/>
+			<do name="反向有功费率3电能" tag="R3_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="32" len="4"/>
+			<do name="反向有功费率4电能" tag="R4_RW_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="36" len="4"/>
+		    <do name="组合无功1费率0电能" tag="R0_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="40" len="4"/>
+			<do name="组合无功1费率1电能" tag="R1_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="44" len="4"/>
+			<do name="组合无功1费率2电能" tag="R2_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="48" len="4"/>
+			<do name="组合无功1费率3电能" tag="R3_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="52" len="4"/>
+			<do name="组合无功1费率4电能" tag="R4_PQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="56" len="4"/>
+			<do name="组合无功2费率0电能" tag="R0_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="60" len="4"/>
+			<do name="组合无功2费率1电能" tag="R1_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="64" len="4"/>
+			<do name="组合无功2费率2电能" tag="R2_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="68" len="4"/>
+			<do name="组合无功2费率3电能" tag="R3_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="72" len="4"/>
+			<do name="组合无功2费率4电能" tag="R4_RQ_Cur_Pow_Data" type="array" dotype="float" dim="1" offset="76" len="4"/>
+		</doType>
+		<doType name="最大需量结构" tag="W_MaxDmd">
+			<do name="有功最大需量" tag="MaxDmd" type="double"/>
+			<do name="发生时间" tag="MaxDmdTime" type="datetime"/>
+		</doType>
+		<doType name="相最大需量及发生时间数据" tag="Ph_Max_Time">
+			<do name="正向有功最大需量及发生时间" tag="Ph_PW_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="反向有功最大需量及发生时间" tag="Ph_RW_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="组合无功1最大需量及发生时间" tag="Ph_CR1_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="组合无功2最大需量及发生时间" tag="Ph_CR2_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="第一象限无功最大需量及发生时间" tag="Ph_QR1_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="第二象限无功最大需量及发生时间" tag="Ph_QR2_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="第三象限无功最大需量及发生时间" tag="Ph_QR3_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="第四象限无功最大需量及发生时间" tag="Ph_QR4_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="正向视在最大需量及发生时间" tag="Ph_PV_Max_Time" type="struct" dotype="W_MaxDmd"/>
+			<do name="反向视在最大需量及发生时间" tag="Ph_RV_Max_Time" type="struct" dotype="W_MaxDmd"/>
+		</doType>
+		<doType name="结算日最大需量及发生时间数据" tag="Sd_Max_Time_Data">
+			<do name="正向有功最大需量及发生时间数据" tag="Sd_PW_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="反向有功最大需量及发生时间数据" tag="Sd_RW_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="组合无功1最大需量及发生时间数据" tag="Sd_CR1_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="组合无功2最大需量及发生时间数据" tag="Sd_CR2_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="第一象限最大需量及发生时间数据" tag="Sd_QR1_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="第二象限最大需量及发生时间数据" tag="Sd_QR2_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="第三象限最大需量及发生时间数据" tag="Sd_QR3_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="第四象限最大需量及发生时间数据" tag="Sd_QR4_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="正向视在最大需量及发生时间数据" tag="Sd_PV_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="反向视在最大需量及发生时间数据" tag="Sd_RV_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="64"/>
+			<do name="A相正向有功最大需量及发生时间数据" tag="Sd_PhA_Max_Time_Data" type="struct" dotype="Ph_Max_Time"/>
+			<do name="B相正向有功最大需量及发生时间数据" tag="Sd_PhB_Max_Time_Data" type="struct" dotype="Ph_Max_Time"/>
+			<do name="C相正向有功最大需量及发生时间数据" tag="Sd_PhC_Max_Time_Data" type="struct" dotype="Ph_Max_Time"/>
+		</doType>
+		<doType name="最大需量及发生时间数据" tag="Max_Time_Data">
+			<do name="当前最大需量及发生时间数据" tag="C_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上1结算日最大需量及发生时间数据" tag="LD1_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上2结算日最大需量及发生时间数据" tag="LD2_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上3结算日最大需量及发生时间数据" tag="LD3_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上4结算日最大需量及发生时间数据" tag="LD4_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上5结算日最大需量及发生时间数据" tag="LD5_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上6结算日最大需量及发生时间数据" tag="LD6_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上7结算日最大需量及发生时间数据" tag="LD7_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上8结算日最大需量及发生时间数据" tag="LD8_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上9结算日最大需量及发生时间数据" tag="LD9_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上10结算日最大需量及发生时间数据" tag="LD10_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上11结算日最大需量及发生时间数据" tag="LD11_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="上12结算日最大需量及发生时间数据" tag="LD12_Max_Time_Data" type="struct" dotype="Sd_Max_Time_Data"/>
+			<do name="某项当前和12个结算日最大需量及发生时间数据块" tag="C_LD12_Max_Time_Data" type="array" dotype="W_MaxDmd" dim="13"/>
+		</doType>
+		<doType name="相值" tag="Ph_Val">
+			<do name="A相值" tag="PhA_Val" type="int16"/>
+			<do name="B相值" tag="PhB_Val" type="int16"/>
+			<do name="C相值" tag="PhC_Val" type="int16"/>
+		</doType>
+		<doType name="相电流" tag="Ph_A">
+			<do name="A相电流" tag="PhA_A" type="int24"/>
+			<do name="B相电流" tag="PhB_A" type="int24"/>
+			<do name="C相电流" tag="PhC_A" type="int24"/>
+		</doType>
+		<doType name="瞬时功率" tag="Ins_P">
+			<do name="瞬时总功率" tag="Ins_Ph_P" type="int24"/>
+			<do name="瞬时A相功率" tag="Ins_PhA_P" type="int24"/>
+			<do name="瞬时B相功率" tag="Ins_PhB_P" type="int24"/>
+			<do name="瞬时C相功率" tag="Ins_PhC_P" type="int24"/>
+		</doType>
+		<doType name="功率因数" tag="Fac_P">
+			<do name="总功率因数" tag="Fac_Ph_P" type="int16"/>
+			<do name="A相功率因数" tag="Fac_PhA_P" type="int16"/>
+			<do name="B相功率因数" tag="Fac_PhB_P" type="int16"/>
+			<do name="C相功率因数" tag="Fac_PhC_P" type="int16"/>
+		</doType>
+		<doType name="变量数据" tag="Var_Data">
+			<do name="三相电压数据" tag="Ph_V_Data" type="struct" dotype="Ph_Val"/>
+			<do name="三相电流数据" tag="Ph_A_Data" type="struct" dotype="Ph_A"/>
+			<do name="瞬时有功功率数据" tag="P_PW_Data" type="struct" dotype="Ins_P"/>
+			<do name="瞬时无功功率数据" tag="P_RW_Data" type="struct" dotype="Ins_P"/>
+			<do name="瞬时视在功率数据" tag="P_V_Data" type="struct" dotype="Ins_P"/>
+			<do name="功率因数数据" tag="P_F_Data" type="struct" dotype="Fac_P"/>
+			<do name="三相相角数据" tag="Ph_PA_Data" type="struct" dotype="Ph_Val"/>
+			<do name="三相电压波形失真图数据" tag="Ph_WV_Data" type="struct" dotype="Ph_Val"/>
+			<do name="三相电流波形失真图数据" tag="Ph_WA_Data" type="struct" dotype="Ph_Val"/>
+			<do name="A相电压谐波含量数据" tag="PhA_HV_Data" type="array" dotype="int16" dim="22"/>
+			<do name="B相电压谐波含量数据" tag="PhB_HV_Data" type="array" dotype="int16" dim="22"/>
+			<do name="C相电压谐波含量数据" tag="PhC_HV_Data" type="array" dotype="int16" dim="22"/>
+			<do name="A相电流谐波含量数据" tag="PhA_HA_Data" type="array" dotype="int16" dim="22"/>
+			<do name="B相电流谐波含量数据" tag="PhB_HA_Data" type="array" dotype="int16" dim="22"/>
+			<do name="C相电流谐波含量数据" tag="PhC_HA_Data" type="array" dotype="int16" dim="22"/>
+			<do name="零线电流" tag="NL_A" type="int24"/>
+			<do name="电网频率" tag="Pow_F" type="int16"/>
+			<do name="一分钟有功总平均功率" tag="One_RM_Pow" type="int24"/>
+			<do name="当前有功需量" tag="C_PW_Dem" type="int24"/>
+			<do name="当前无功需量" tag="C_RW_Dem" type="int24"/>
+			<do name="当前视在需量" tag="C_V_Dem" type="int24"/>
+			<do name="表内温度" tag="M_Tmp" type="int16"/>
+			<do name="时钟电池电压(内部)" tag="Clo_Bat_Vol" type="int16"/>
+			<do name="停电抄表电池电压(外部)" tag="Bat_Vol_Pow" type="int16"/>
+			<do name="内部电池工作时间" tag="Bat_Work_Time" type="int32"/>
+			<do name="当前阶梯电价" tag="C_Step_Tariff" type="int32"/>
+		</doType>
+	</DataTypeTempltes>
+	<ID_CFG num="20">
+		<do name="Meter_Pow_Data" tag="R0_PW_Cur_Pow_Data" id="00010000"/>
+		<do name="Meter_Pow_Data" tag="R1_PW_Cur_Pow_Data" id="00010100"/>
+		<do name="Meter_Pow_Data" tag="R2_PW_Cur_Pow_Data" id="00010200"/>
+		<do name="Meter_Pow_Data" tag="R3_PW_Cur_Pow_Data" id="00010300"/>
+		<do name="Meter_Pow_Data" tag="R4_PW_Cur_Pow_Data" id="00010400"/>
+		<do name="Meter_Pow_Data" tag="R0_RW_Cur_Pow_Data" id="00020000"/>
+		<do name="Meter_Pow_Data" tag="R1_RW_Cur_Pow_Data" id="00020100"/>
+		<do name="Meter_Pow_Data" tag="R2_RW_Cur_Pow_Data" id="00020200"/>
+		<do name="Meter_Pow_Data" tag="R3_RW_Cur_Pow_Data" id="00020300"/>
+		<do name="Meter_Pow_Data" tag="R4_RW_Cur_Pow_Data" id="00020400"/>
+		<do name="Meter_Pow_Data" tag="R0_PQ_Cur_Pow_Data" id="00030000"/>
+		<do name="Meter_Pow_Data" tag="R1_PQ_Cur_Pow_Data" id="00030100"/>
+		<do name="Meter_Pow_Data" tag="R2_PQ_Cur_Pow_Data" id="00030200"/>
+		<do name="Meter_Pow_Data" tag="R3_PQ_Cur_Pow_Data" id="00030300"/>
+		<do name="Meter_Pow_Data" tag="R4_PQ_Cur_Pow_Data" id="00030400"/>
+		<do name="Meter_Pow_Data" tag="R0_RQ_Cur_Pow_Data" id="00040000"/>
+		<do name="Meter_Pow_Data" tag="R1_RQ_Cur_Pow_Data" id="00040100"/>
+		<do name="Meter_Pow_Data" tag="R2_RQ_Cur_Pow_Data" id="00040200"/>
+		<do name="Meter_Pow_Data" tag="R3_RQ_Cur_Pow_Data" id="00040300"/>
+		<do name="Meter_Pow_Data" tag="R4_RQ_Cur_Pow_Data" id="00040400"/>
+	</ID_CFG>
+</Model>
