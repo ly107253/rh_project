@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <sys/shm.h>
 #include <pthread.h>
-#include "sm_common.h"
+#include <unistd.h>
 #include "rh_msg_channel.h"
 
 static pthread_mutex_t* s_lock;			// 设备数据读写同步锁
@@ -72,7 +72,6 @@ BOOL SmDestroyMsgQue(HANDLE handle)
 int SmMsgSendEcho(unsigned int keyid,RH_MSG_BUFFER_T *pMsg)
 {
 	int shmId = 0;
-	unsigned int time = 0;
 	RH_MSG_BUFFER_T *pMem = NULL;
 
 	SmMutexLock();
@@ -107,7 +106,7 @@ int SmMsgSendEcho(unsigned int keyid,RH_MSG_BUFFER_T *pMsg)
 
 }
 
-int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, RH_MSG_BUFFER_T *pRet,uint32 nWaittime)
+int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, RH_MSG_BUFFER_T *pRet,unsigned int nWaittime)
 {
 	int shmId = 0;
 	unsigned int time = 0;
@@ -137,13 +136,20 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 	
 	//检查是否可以发消息
 
+	printf("nWaittime = %d\n",nWaittime);
+	
 	for(time = 0; time < nWaittime;time++)
-	{
+	{		
+		printf("waiting sending.....(%02x)\n",pMem->head.state);
+		
+		sleep(1);
+		
 		if( pMem->head.state != MSG_IDLE ) continue;
 
+		
 		memcpy(pMem,pMsg,sizeof(RH_MSG_BUFFER_T));
 
-		sleep(1);
+		break;
 	}
 
 	//超时
@@ -155,10 +161,14 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 		return -3;
 	}
 
+	printf("time = %d nWaittime = %d\n",time,nWaittime);
+	
 	//检查消息是否返回
 	for(;time < nWaittime;time++)
 	{
 		sleep(1);
+
+		printf("waint recv state = %02x sync = %d %s %s\n",pMem->head.state,pMem->head.sync,pMem->head.szDest,szSrc);
 		
 		if( pMem->head.state != MSG_ACK ) continue;
 		if( !pMem->head.sync ) continue;	
@@ -187,13 +197,13 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 int SmMsgRecv(const char *szName,unsigned int keyid, RH_MSG_BUFFER_T *pMsg)
 {
 	int shmId = 0;
-	unsigned int time = 0;
 	RH_MSG_BUFFER_T *pMem = NULL;
 
 	//获取队列	
 	shmId = SmGetMsgQue(keyid);
 	if(shmId < 0)
 	{
+		printf("get msg que faile %s\n",__func__);
 		return -1;
 	}
 
@@ -201,6 +211,7 @@ int SmMsgRecv(const char *szName,unsigned int keyid, RH_MSG_BUFFER_T *pMsg)
 	pMem = (RH_MSG_BUFFER_T*)shmat(shmId, NULL, 0);
 	if(pMem == NULL)
 	{
+		printf("get mem faile %s\n",__func__);
 		return -2;
 	}	
 
@@ -211,6 +222,10 @@ int SmMsgRecv(const char *szName,unsigned int keyid, RH_MSG_BUFFER_T *pMsg)
 	}	
 
 	//获取消息
+	
+	printf("pMem->head.state = %02x\n",pMem->head.state);
+	printf("szDest = %s szSrc = %s\n",pMem->head.szDest,szName);
+	
 	if(strcmp(pMem->head.szDest,szName) == 0)
 	{		
 		memcpy(pMsg,pMem,sizeof(RH_MSG_BUFFER_T)); 

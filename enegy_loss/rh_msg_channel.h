@@ -4,7 +4,7 @@
 #define APP_NAME_LEN     64
 
 #define MAX_MSG_BUF_LEN  2048
-#define MAX_MSG_TIMEOUT  100
+#define MAX_MSG_TIMEOUT  30
 
 #define HANDLE  int
 
@@ -70,6 +70,17 @@ typedef struct
 		ACK_T		ack;			// Ó¦´ð
 	};
 } RH_MSG_BUFFER_T;
+
+
+void SmMsgInit(unsigned int keyid);
+
+int SmMsgRecv(const char *szName,unsigned int keyid, RH_MSG_BUFFER_T *pMsg);
+
+int SmMsgSendEcho(unsigned int keyid,RH_MSG_BUFFER_T *pMsg);
+
+int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, RH_MSG_BUFFER_T *pRet,unsigned int nWaittime);
+
+
 
 
 #endif
