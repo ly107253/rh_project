@@ -19,8 +19,7 @@ typedef struct tag_OOP_LNLS_UNIT
 	unsigned char   abnorFlag;		/**< 异常标记(enum)*/
 }LNLS_STATE_T;
 
-/** 交采线程初始化*/
-void lda_monitor_proc(void);
+
 
 void el_init( void );
 
