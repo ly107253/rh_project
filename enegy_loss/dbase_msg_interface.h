@@ -26,8 +26,6 @@
 		}
 		ACK ∷= SEQUENCE
 		{
-			信息点号		     long-unsigned，
-			数据类型标识           double-long-unsigned，
 			数据内容             oct-string;
 		}
  @endverbatim

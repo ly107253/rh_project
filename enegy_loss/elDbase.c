@@ -5,15 +5,17 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "elDbase.h"
+#include "elCommon.h"
 #include "dbase_msg_interface.h"
 
 static int seq = 0;
 
 
-int el_read_data(unsigned short nPn,unsigned char *inBuf,int len,unsigned char *outBuf,int nSize)
+int el_read_data(unsigned short nPn,unsigned int id,unsigned char *outBuf,int nSize)
 {
+	int nPos = 0;
 	int nRet = -1;
-	
+	unsigned int len = 0;
 	RH_MSG_BUFFER_T pMsgSend;
 	RH_MSG_BUFFER_T pMsgRet;
 	
@@ -27,26 +29,33 @@ int el_read_data(unsigned short nPn,unsigned char *inBuf,int len,unsigned char *
 	strcpy(pMsgSend.head.szDest,RH_APP_NAME);
 	pMsgSend.msg.tag.iid = IID_EL;
 	pMsgSend.msg.tag.iop = IOP_DBASE_READ;
+
+	nPos += xdr_add_uint16(&pMsgSend.msg.pValue[nPos],nPn);
+	nPos += xdr_add_uint32(&pMsgSend.msg.pValue[nPos],id);
 	
-	pMsgSend.msg.nSize   = len;
-	memcpy(pMsgSend.msg.pValue,&inBuf,len);
+	pMsgSend.msg.nSize   = nPos;
 		
 	nRet = SmMsgSendWait(EL_APP_NAME,EL_KEY_ID,&pMsgSend,&pMsgRet,WAITE_TIMEOUT);
 	if( nRet == 0 )
 	{
+		nPos = 0;
 		printf("pMsgRet.ack.nSize = %d\n",pMsgRet.ack.nSize);
 		printf("%02x %02x %02x\n",pMsgRet.ack.pValue[0],pMsgRet.ack.pValue[1],pMsgRet.ack.pValue[2]);
 		if(pMsgRet.ack.nSize <= nSize)
 		{
-			memcpy(outBuf,pMsgRet.ack.pValue,pMsgRet.ack.nSize);
+			//½âÎöÏûÏ¢
+			nPos += xdr_get_OCTET_STRING(pMsgRet.ack.pValue, outBuf,nSize,&len);
+
+			return len;
 		}		
 	}
 
 	return nRet;
 }
 
-int el_write_data(unsigned short nPn,unsigned char *buf,int nSize)
+int el_write_data(unsigned short nPn,unsigned int id,unsigned char *buf,unsigned int len)
 {
+	int nPos = 0;
 	RH_MSG_BUFFER_T pMsgSend;
 	RH_MSG_BUFFER_T pMsgRet;
 	
@@ -62,15 +71,18 @@ int el_write_data(unsigned short nPn,unsigned char *buf,int nSize)
 	pMsgSend.msg.tag.iid = IID_EL;
 	pMsgSend.msg.tag.iop = IOP_DBASE_WRITE;
 
-	memcpy(&pMsgSend.msg.pValue,buf,nSize);
+	nPos += xdr_add_uint16(&pMsgSend.msg.pValue[nPos],nPn);
+	nPos += xdr_add_uint32(&pMsgSend.msg.pValue[nPos],id);
+	nPos += xdr_add_OCTET_STRING(&pMsgSend.msg.pValue[nPos],buf,len);
 	
-	pMsgSend.msg.nSize   = nSize;
+	pMsgSend.msg.nSize   = nPos;
 
 	return SmMsgSendWait(EL_APP_NAME,EL_KEY_ID,&pMsgSend,&pMsgRet,WAITE_TIMEOUT);
 }
 
 void el_msg_echo(int nErrNo,RH_MSG_BUFFER_T *pMsgRecv,unsigned char *buf,int len)
 {	
+	int nPos = 0;
 	RH_MSG_BUFFER_T pMsgSend;
 
 	memset(&pMsgSend,0x00,sizeof(RH_MSG_BUFFER_T));
@@ -87,8 +99,10 @@ void el_msg_echo(int nErrNo,RH_MSG_BUFFER_T *pMsgRecv,unsigned char *buf,int len
 
 	
 	pMsgSend.ack.errNo = nErrNo;
-	pMsgSend.ack.nSize = len;	
-	memcpy(pMsgSend.ack.pValue,buf,len);
+
+	nPos += xdr_add_OCTET_STRING(&pMsgSend.msg.pValue[nPos],buf,len);
+	
+	pMsgSend.ack.nSize = nPos;	
 
 	SmMsgSendEcho(EL_KEY_ID,&pMsgSend);
 }

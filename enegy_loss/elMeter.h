@@ -102,9 +102,8 @@ typedef struct tag_OOP_METER
 
 
 
-unsigned int el_enesales_get(     unsigned char level );
+unsigned int el_ene_get(     unsigned char level,unsigned char nPhase);
 
-unsigned int el_enesupply_get(     unsigned char level );
 
 void meter_data_update( void );
 

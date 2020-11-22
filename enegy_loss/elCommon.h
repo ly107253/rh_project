@@ -55,5 +55,24 @@ extern void smallcpy(void *pDst, void *pSrc, int len);
  */
 extern int get_cfg_num(xmlNodePtr node);
 
+int xdr_add_uint8( unsigned char *pBuf, unsigned char val );
+
+int xdr_get_uint8(unsigned char *pBuf, unsigned char *val );
+
+int xdr_add_uint16(unsigned char *pBuf, unsigned short val);
+
+int xdr_get_uint16(unsigned char *pBuf, unsigned short *val);
+
+int xdr_add_uint32(unsigned char *pBuf, unsigned int val);
+
+int xdr_get_uint32(unsigned char *pBuf, unsigned int * val);
+
+int xdr_add_variantlen(unsigned char *pBuf, unsigned int nSize);
+
+int xdr_get_variantlen(unsigned char *pBuf, unsigned int *nLen);
+
+int xdr_add_OCTET_STRING(unsigned char *pBuf, unsigned char *pData, unsigned int nSize);
+
+int xdr_get_OCTET_STRING(unsigned char *pBuf, unsigned char *pData, unsigned int len, unsigned int * nSize);
 
 #endif

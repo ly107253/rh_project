@@ -8,7 +8,7 @@
 #include "elCommon.h"
 #include "rh_msg_channel.h"
 
-static LNLS_STATE_T  elStatis[METER_LEV_MAX];
+static EL_STATES_T  elStatis[METER_LEV_MAX];
 
 
 #ifndef utime_t
@@ -40,31 +40,40 @@ utime_t sys_time_get(void)
 
 static void el_statis_proc( void )
 {
-	unsigned char level = 0;
+	unsigned char nPhase = 0;
+	unsigned char level  = 0;
 	int          elT;
 	unsigned int enesal;
 	unsigned int enesup;
 
 	for(level= 0; level < METER_LEV_MAX;level++)
 	{
-		enesal = el_enesales_get(level);
-		if(enesal <= 0)
+		for(nPhase = 0; nPhase < EL_MAX_PHASES;nPhase++)
 		{
-			return;
+			//获取当前层级分相电能
+			enesal = el_ene_get(level,nPhase);
+			if(enesal < 0)
+			{
+				return;
+			}
+
+			//获取下一层级分相电能
+			enesup = el_ene_get(level+1,nPhase);
+			if(enesup <= 0)
+			{
+				return;
+			}
+
+			//计算当前层级线损率			
+			elT = ((float)( enesup - enesal )/enesup)*100;
+			
+			elStatis[level].nVal[nPhase].nRatio = elT;
+			elStatis[level].nVal[nPhase].eneSal = enesal;
+			elStatis[level].nVal[nPhase].eneSup = enesup;
 		}
 
-		enesup = el_enesupply_get(level);
-		if(enesup <= 0)
-		{
-			return;
-		}
-
-		elT = ((float)( enesup - enesal )/enesup)*100;
-
-		elStatis[level].nRatio = elT;
-		elStatis[level].eneSal = enesal;
-		elStatis[level].eneSup = enesup;
 	}
+
 	
 }
 

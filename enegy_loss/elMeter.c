@@ -18,9 +18,13 @@ MET_ENERGY_BLOCK_T	      s_UserMetData[METER_LEV_MAX];
 static const unsigned int DI_ENERGY[] = 
 {
 	0x00100200, // 正有
+	0x00110200, // A相正有
+	0x00120200, // B相正有
+	0x00130200, // C相正有
 	0x00200200, // 反有
-	0x00300200, // 正无(组合无功1)
-	0x00400200	// 反无(组合无功2)
+	0x00210200, // A相正有
+	0x00220200, // B相正有
+	0x00230200, // C相正有
 };
 
 int meter_para_load( const char *szFile )
@@ -210,8 +214,7 @@ void meter_data_update( void )
 	int nRet = 0;
 	unsigned char  level = 0;
 	unsigned short metid = 0;
-	unsigned char  inBuf[4] = {0};
-	unsigned char  outBuf[128] = {0};
+	unsigned int   data = 0;
 	
 	for(metid = 0; metid < MAX_MET_NUM;metid++)
 	{
@@ -221,32 +224,76 @@ void meter_data_update( void )
 		level = meter_level_check(metid);
 		if(level >= METER_LEV_MAX) continue;
 
-		smallcpy(inBuf,(unsigned char*)&DI_ENERGY[0], sizeof(DI_ENERGY[0]));
-
-		nRet = el_read_data(metid,inBuf,4,outBuf,128);
+		nRet = el_read_data(metid,DI_ENERGY[0],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			//s_UserMetData[level].enepaT.nValue[0] += data;
+			s_UserMetData[level].enepaT.nValue[0] += data;
 		}
 		
-		smallcpy(inBuf,(unsigned char*)&DI_ENERGY[0], sizeof(DI_ENERGY[0]));
-
-		nRet = el_read_data(metid,inBuf,4,outBuf,128);
+		nRet = el_read_data(metid,DI_ENERGY[1],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			//s_UserMetData[level].enepaT.nValue[0] += data;
-		}	
-	
+			s_UserMetData[level].enepaA.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[2],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enepaB.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[3],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enepaC.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[4],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enenaT.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[5],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enenaA.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[6],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enenaB.nValue[0] += data;
+		}
+
+		nRet = el_read_data(metid,DI_ENERGY[7],(unsigned char*)&data,sizeof(data));
+		if(nRet > 0)
+		{
+			s_UserMetData[level].enenaC.nValue[0] += data;
+		}
 	}
 }
 
-unsigned int el_enesales_get(     unsigned char level )
+unsigned int el_ene_get(     unsigned char level,unsigned char nPhase)
 {
-	return s_UserMetData[level].enenaT.nValue[0];
+	if(nPhase == 0)
+	{
+		return s_UserMetData[level].enepaT.nValue[0];
+	}
+	else if(nPhase == 1)
+	{
+		return s_UserMetData[level].enepaA.nValue[0];
+	}
+	else if(nPhase ==2)
+	{
+		return s_UserMetData[level].enepaB.nValue[0];
+	}
+	else if(nPhase ==3)
+	{
+		return s_UserMetData[level].enepaC.nValue[0];
+	}
+
+	return -1;
 }
 
-unsigned int el_enesupply_get(     unsigned char level )
-{
-	return s_UserMetData[level].enepaT.nValue[0];
-}
 

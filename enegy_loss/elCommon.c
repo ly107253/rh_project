@@ -158,6 +158,59 @@ int get_cfg_num(xmlNodePtr node)
 	return Num;
 }
 
+// uint8
+int xdr_add_uint8( unsigned char *pBuf, unsigned char val )
+{
+	pBuf[0] = val;
+	return 1;
+}
+
+int xdr_get_uint8(unsigned char *pBuf, unsigned char *val )
+{
+	*val = pBuf[0];
+	return 1;
+}
+
+int xdr_add_uint16(unsigned char *pBuf, unsigned short val)
+{
+	pBuf[0] = (unsigned char)((val)>>8);
+	pBuf[1] = (unsigned char)(val);
+	
+	return 2;
+}
+
+int xdr_get_uint16(unsigned char *pBuf, unsigned short *val)
+{
+	unsigned char *pData = (unsigned char*)val;
+
+	pData[1] = pBuf[0];
+	pData[0] = pBuf[1];
+	
+	return 2;
+}
+
+int xdr_add_uint32(unsigned char *pBuf, unsigned int val)
+{
+	pBuf[0] = ((unsigned char)((val)>>24));
+	pBuf[1] = ((unsigned char)((val)>>16));
+	pBuf[2] = ((unsigned char)((val)>>8));
+	pBuf[3] = ((unsigned char)((val)));
+	
+	return 4;
+}
+
+int xdr_get_uint32(unsigned char *pBuf, unsigned int * val)
+{
+	unsigned char *pData = (unsigned char*)val;
+
+	pData[3] = pBuf[0];
+	pData[2] = pBuf[1];
+	pData[1] = pBuf[2];
+	pData[0] = pBuf[3];
+	
+	return 4;
+}
+
 /**
  ******************************************************************************
  * @brief		可变长度添加
@@ -268,14 +321,5 @@ int xdr_get_OCTET_STRING(unsigned char *pBuf, unsigned char *pData, unsigned int
 	return nPos;
 }
 
-int xdr_add_uint32(unsigned char *pBuf, unsigned int val)
-{
-	pBuf[0] = ((unsigned char)((val)>>24));
-	pBuf[1] = ((unsigned char)((val)>>16));
-	pBuf[2] = ((unsigned char)((val)>>8));
-	pBuf[3] = ((unsigned char)((val)));
-	
-	return 4;
-}
 
 
