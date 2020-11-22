@@ -1,16 +1,18 @@
 #include <string.h>
 #include <assert.h>
-#include "dbase_msg_interface.h"
 #include <sys/un.h>
 #include "libxml/parser.h"
 #include "libxml/tree.h"
 #include "libxml/xpath.h"
 #include "elMeter.h"
+#include "elCommon.h"
+#include "elDbase.h"
+#include "dbase_msg_interface.h"
 
 OOP_METER_T               g_ParaMet[MAX_MET_NUM];
 
-
 MET_ENERGY_BLOCK_T	      s_UserMetData[METER_LEV_MAX];
+
 
 
 static const unsigned int DI_ENERGY[] = 
@@ -21,7 +23,7 @@ static const unsigned int DI_ENERGY[] =
 	0x00400200	// 反无(组合无功2)
 };
 
-void meter_para_load( const char *szFile )
+int meter_para_load( const char *szFile )
 {	
 	int nMetNum = 0;
 	int idx = 0;
@@ -205,9 +207,11 @@ void meter_data_init( void )
 
 void meter_data_update( void )
 {
+	int nRet = 0;
 	unsigned char  level = 0;
 	unsigned short metid = 0;
-	unsigned int   data;
+	unsigned char  inBuf[4] = {0};
+	unsigned char  outBuf[128] = {0};
 	
 	for(metid = 0; metid < MAX_MET_NUM;metid++)
 	{
@@ -216,16 +220,22 @@ void meter_data_update( void )
 		//根据level分别获取对应得电能量
 		level = meter_level_check(metid);
 		if(level >= METER_LEV_MAX) continue;
-		
-		if(el_read_data(metid,DI_ENERGY[0],data,sizeof(data)))
-		{
-			s_UserMetData[level].enepaT.nValue[0] += data;
-		}
 
-		if(el_read_data(metid,DI_ENERGY[1],data,sizeof(data)))
+		smallcpy(inBuf,(unsigned char*)&DI_ENERGY[0], sizeof(DI_ENERGY[0]));
+
+		nRet = el_read_data(metid,inBuf,4,outBuf,128);
+		if(nRet > 0)
 		{
-			s_UserMetData[level].enenaT.nValue[0] += data;
-		}		
+			//s_UserMetData[level].enepaT.nValue[0] += data;
+		}
+		
+		smallcpy(inBuf,(unsigned char*)&DI_ENERGY[0], sizeof(DI_ENERGY[0]));
+
+		nRet = el_read_data(metid,inBuf,4,outBuf,128);
+		if(nRet > 0)
+		{
+			//s_UserMetData[level].enepaT.nValue[0] += data;
+		}	
 	
 	}
 }

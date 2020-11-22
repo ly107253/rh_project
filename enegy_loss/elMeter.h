@@ -1,18 +1,21 @@
 #ifndef _H_EL_ACMET_H__
 #define _H_EL_ACMET_H__
 
+#define MAX_METER                1024
+
+
 #define MAX_MET_NUM              128
 
-enum
+typedef enum
 {
 	METER_LEV0 = 0,
 	METER_LEV1,
 	METER_LEV2,
 	METER_LEV3,
-	METER_LEV_MAX,
-};
+	METER_LEV_MAX
+}METER_LEVEL_E;
 	
-extern 	OOP_METER_T 			  g_ParaMet[MAX_MET_NUM];
+//extern 	OOP_METER_T 			  g_ParaMet[MAX_MET_NUM];
 
 
 #define EMPTY_METER(metid)         (g_ParaMet[metid].basic.port.value == 0)
@@ -97,14 +100,13 @@ typedef struct tag_OOP_METER
 }OOP_METER_T;
 
 
-extern MET_ENERGY_BLOCK_T	      s_UserMetData;
-
-extern MET_ENERGY_BLOCK_T         s_CenMetData;
 
 
-unsigned int el_enesales_get( void );
+unsigned int el_enesales_get(     unsigned char level );
 
-unsigned int el_enesupply_get( void );
+unsigned int el_enesupply_get(     unsigned char level );
+
+void meter_data_update( void );
 
 #endif
 

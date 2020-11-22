@@ -6,7 +6,6 @@ extern "C"
 {
 #endif
 
-#include "oopType.h"
 
 #define DATA_PATH		"/data/app/package/data/"
 
@@ -23,6 +22,7 @@ typedef struct tag_OOP_LNLS_UNIT
 /** 交采线程初始化*/
 void lda_monitor_proc(void);
 
+void el_init( void );
 
 
 #ifdef __cplusplus

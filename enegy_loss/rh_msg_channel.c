@@ -58,15 +58,15 @@ void SmMsgInit(unsigned int keyid)
 	SmMutexInit();
 }
 
-BOOL SmDestroyMsgQue(HANDLE handle)
+int SmDestroyMsgQue(HANDLE handle)
 {	
 	if(shmctl(handle,IPC_RMID,NULL) < 0)
 	{
 		perror("shmctl");
-		return FALSE;
+		return -1;
 	}
 	
-	return TRUE;
+	return 0;
 }
 
 int SmMsgSendEcho(unsigned int keyid,RH_MSG_BUFFER_T *pMsg)

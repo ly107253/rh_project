@@ -1,9 +1,42 @@
 #include <stdio.h>
 #include <pthread.h>
+#include <time.h>
+#include <string.h>
 #include "elTask.h"
-
+#include "elMeter.h"
+#include "elDbase.h"
+#include "elCommon.h"
+#include "rh_msg_channel.h"
 
 static LNLS_STATE_T  elStatis[METER_LEV_MAX];
+
+
+#ifndef utime_t
+#define utime_t				unsigned int			// 从2000.1.1 0:0 开始的秒数
+#endif
+
+#ifndef SECS1970TO2000
+#define SECS1970TO2000		0x386D4380		// 1970.1.1 0:0:0到2000.1.1 0:0:0的秒数946684800((30*365+7)*24*3600)
+#endif
+
+#define TIMEZONESECS 28800
+
+/**
+*********************************************************************
+* @brief       获取系统秒数
+* @return      系统秒数
+* @note        无
+* @warning     无
+*********************************************************************
+*/
+utime_t sys_time_get(void)
+{
+	time_t curtime = time(NULL);
+	curtime -= SECS1970TO2000;
+	curtime += TIMEZONESECS;
+	return (utime_t)curtime;
+}
+
 
 static void el_statis_proc( void )
 {
@@ -47,14 +80,13 @@ void el_statis_init( void )
 
 static void* elTaskProc(void *arg)
 {
-	unsigned int now  = 0;
-	unsigned int last = 0;
+	utime_t now  = 0;
+	utime_t last = 0;
 
 	BOOL bMin    = FALSE;	
 	BOOL b15Min  = FALSE;
 	BOOL bHour	 = FALSE;
 	BOOL bDay    = FALSE;
-	BOOL bMon	 = FALSE;
 
 	last = sys_time_get();
 
@@ -104,6 +136,7 @@ static void* elTaskProc(void *arg)
 		
 	}
 
+	return NULL;
 }
 
 
@@ -124,3 +157,12 @@ void el_task_init()
 	}
 }
 
+
+void el_init( void )
+{
+	//数据接收初始化
+	el_dbase_init();
+
+	//任务初始化
+	el_task_init();
+}

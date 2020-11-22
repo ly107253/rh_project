@@ -1,12 +1,15 @@
-#ifndef _EL_DBASE_H__
-#define _EL_DBASE_H__
+#ifndef _DBASE_MSG_INTERFACE_H__
+#define _DBASE_MSG_INTERFACE_H__
 
 //消息ID
 #define EL_KEY_ID      1024
 
 //线损app名字
 #define EL_APP_NAME    "elAPP"
+#define RH_APP_NAME    "rhApp"
 
+
+#define IID_EL            1
 
 //消息超时默认时间
 #define WAITE_TIMEOUT     30

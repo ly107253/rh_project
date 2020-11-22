@@ -8,10 +8,7 @@
 
 #define HANDLE  int
 
-typedef int BOOL;
 
-#define TRUE    1
-#define FALSE   0
 
 
 enum Msg_Flag
