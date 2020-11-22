@@ -134,11 +134,29 @@ int read_mem_data(RH_MSG_BUFFER_T*pMsg)
 
 int write_mem_data(RH_MSG_BUFFER_T*pMsg)
 {
-	unsigned char buf[2] = {0x01,0x01};
+	int nPos = 0;
+	unsigned char nErrNo = 1;
+	unsigned short nPn = 0;
+	unsigned int id = 0;
+	unsigned int datalen;
+	unsigned char dataBuf[128] = {0};
 	
-	el_msg_echo(0,pMsg,buf,sizeof(buf));
+	nPos += xdr_get_uint16(&pMsg->msg.pValue[nPos],&nPn);
+	nPos += xdr_get_uint32(&pMsg->msg.pValue[nPos],&id);
+	nPos += xdr_get_OCTET_STRING(&pMsg->msg.pValue[nPos],dataBuf,sizeof(dataBuf),&datalen);
+	
+	printf("nPn = %d id = %08x\n",nPn,id);
+	
+	int nRet = rh_mem_data_write_oop(nPn,id,dataBuf,datalen);
+	if(nRet > 0)
+	{
+		nErrNo = 0;
+	}
+	
+	el_msg_echo(nErrNo,pMsg,dataBuf,nRet);
 
 	return 0;
+
 }
 
 /** @brief 消息命令处理表	*/
