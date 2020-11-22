@@ -1,6 +1,6 @@
 
 WORK_DIR := $(shell pwd)
-MQTT_OUTPATH=./lib
+MQTT_OUTPATH=../bin
 
 LINKFLAG := 
 OBJS := main.o elDbase.o elMeter.o elTask.o elCommon.o rh_msg_channel.o 

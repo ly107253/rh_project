@@ -3,7 +3,6 @@
 
 
 #include <pthread.h> 
-#include "plat_include.h"
 
 
 

@@ -27,6 +27,7 @@ static const unsigned int DI_ENERGY[] =
 	0x00230200, // CÏàÕýÓÐ
 };
 
+
 int meter_para_load( const char *szFile )
 {	
 	int nMetNum = 0;
@@ -224,51 +225,61 @@ void meter_data_update( void )
 		level = meter_level_check(metid);
 		if(level >= METER_LEV_MAX) continue;
 
+		printf("metid = %d level = %d\n",metid,level);
+		
 		nRet = el_read_data(metid,DI_ENERGY[0],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data1  = %d\n",data);
 			s_UserMetData[level].enepaT.nValue[0] += data;
 		}
 		
 		nRet = el_read_data(metid,DI_ENERGY[1],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data2  = %d\n",data);
 			s_UserMetData[level].enepaA.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[2],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data3  = %d\n",data);
 			s_UserMetData[level].enepaB.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[3],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data4  = %d\n",data);
 			s_UserMetData[level].enepaC.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[4],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data5  = %d\n",data);
 			s_UserMetData[level].enenaT.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[5],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data6  = %d\n",data);
 			s_UserMetData[level].enenaA.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[6],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data7  = %d\n",data);
 			s_UserMetData[level].enenaB.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[7],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
+			printf("data8  = %d\n",data);
 			s_UserMetData[level].enenaC.nValue[0] += data;
 		}
 	}

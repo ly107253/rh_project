@@ -51,12 +51,7 @@
 #define IOP_DBASE_WRITE    0x11
 
 
-#define ID_IBJ_60510201           0x60510201           //供电量                 double-long-unsigned，  
-#define ID_IBJ_60510202           0x60510202           //售电量                 double-long-unsigned，
-#define ID_IBJ_60510203           0x60510203           //倒送电量                double-long-unsigned，
-#define ID_IBJ_60510204           0x60510204           //分布式电源上网电量           double-long-unsigned
-#define ID_IBJ_60510205           0x60510205           //线损率                 long（换算：-2，单位：%）
-#define ID_IBJ_60510206           0x60510206           //异常标志                正常			（0）总表电量异常	（1）户表电量异常	（2）
+
 
 
 

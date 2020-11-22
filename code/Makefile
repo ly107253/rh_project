@@ -1,9 +1,9 @@
 
 WORK_DIR := $(shell pwd)
-MQTT_OUTPATH=./lib
+MQTT_OUTPATH=../bin
 
 LINKFLAG := 
-OBJS := main.o mem.o
+OBJS := main.o mem.o elCommon.o elDbase.o rh_msg_channel.o
 
 
 MAINOUT := lypub.out

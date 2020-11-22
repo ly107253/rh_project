@@ -1,10 +1,10 @@
 
-CC=arm-linux-gnueabihf-gcc
-CCC=arm-linux-gnueabihf-g++
-TR=arm-linux-gnueabihf-strip
-NM=arm-linux-gnueabihf-nm
-AR=arm-linux-gnueabihf-ar
-LD=arm-linux-gnueabihf-ld
+CC=arm-linux-gcc
+CCC=arm-linux-g++
+TR=arm-linux-strip
+NM=arm-linux-nm
+AR=arm-linux-ar
+LD=arm-linux-ld
 
 MAKE = make
 

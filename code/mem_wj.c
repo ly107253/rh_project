@@ -1304,7 +1304,7 @@ int rh_mem_data_read_oop(unsigned short nPn,unsigned int nDi,void *data,int data
 	
 	pthread_mutex_unlock(pied->lock);
 
-	return datalen;
+	return pDotType->dataLen;
 }
 
 /**

@@ -1,167 +1,19 @@
 #include <stdio.h>
 #include <string.h>
-#include "mem.h"
 #include "libxml/parser.h"
 #include "libxml/tree.h"
 #include "libxml/xpath.h"
+#include "mem.h"
+#include "elCommon.h"
+#include "elDbase.h"
+#include "dbase_msg_interface.h"
+
 POINT_MAP_T       s_pointMap;             // 点表映射表
 
 MEM_MAP_T         s_memMap;               // 内存索引映射列表
 
 static void *s_pDataMem = NULL;           // 连续内存地址
 
-
-/**
- *  @brief      : 数字字符串转换为十进制数
- *  @param[in]  : pStr，字符串
- *  @param[in]  : nLen，字符串长度
- *  @param[out] : 无
- *  @return     : 转换后的十进制数
-*/
-static BOOL str2dec(char *pStr, int *pDst)
-{
-    unsigned int data = 0;
-    BOOL prefix = FALSE;
-    int i = 0;
-    int nLen = strlen((const char*)pStr);
-    for(i=0; i<nLen; i++)
-    {
-        if(pStr[i]<'0'||pStr[i]>'9')
-        {
-            if((i == 0)&&(pStr[i] == '-'))
-            {
-                prefix = TRUE;
-                continue;
-            }
-            break;
-        }
-
-        data *= 10;
-        data += pStr[i]-'0';
-		
-    }
-
-    if(prefix)
-    {
-        *pDst = data * (-1);
-    }
-    else
-    {
-        *pDst = data;
-    }
-
-    return TRUE;
-}
-
-/**
- *  @brief      : 将字符串转换为16进制,如"11"->0x11
- *  @param[in]  : pStr，字符串
- *  @param[in]  : nLen, 字符串长度
- *  @param[out] : pDst，转换后字节数组
- *  @return     : 成功TRUE，失败FLASE
-*/
-static int str2hex(const char *pStr, unsigned char *pBuff, int nLen)
-{
-	char c = 0;
-	unsigned char uc = 0;
-	unsigned char number = 0;
-	BOOL bUpper = FALSE;
-	int curLen = 0;
-	while(0 != *pStr && curLen < nLen)
-	{
-		c = *pStr++;
-		if(c >= '0' && c <= '9')
-		{
-			uc = (unsigned char)(c-'0');
-		}
-		else if((c >= 'A') && (c <= 'F'))
-		{
-			uc = (unsigned char)(c-'A') + 10;
-		}
-		else if((c >= 'a') && (c <= 'f'))
-		{
-			uc = (unsigned char)(c-'a') + 10;
-		}
-		else
-		{
-			continue;
-		}
-
-		if(bUpper)
-		{
-			number = (number << 4) + uc;
-			*pBuff++ = number;
-			bUpper = FALSE;
-			curLen++;
-		}
-		else
-		{
-			number = uc;
-			bUpper = TRUE;
-		}
-	}
-
-	return curLen;	
-}
-/**
- *  @brief      : 倒序拷贝
- *  @param[out]  : dest,目的数据
- *  @param[in]  : src,源数据
- *  @param[in] : len,长度
-*/
-static void reversecpy(unsigned char * dest, const unsigned char* src,  int len)
-{
-    int i = 0, j = 0;
-
-    for(i=0,j=len-1; i<len; i++,j--)
-    {
-        dest[j] = src[i];
-    }
-}
-
-/**
- *  @brief      : 小段内存拷贝
- *  @param[in]  : pSrc，源数据
- *  @param[in]  : len，拷贝长度
- *  @param[out] : pDst，目的数据
- *  @return     :
-*/
-void smallcpy(void *pDst, void *pSrc, int len)
-{
-    int i = 0;
-    unsigned char  *des = (unsigned char*)pDst;
-    unsigned char  *src = (unsigned char*)pSrc;
-
-    for(i=0; i<len; i++)
-    {
-        des[i] = src[i];
-    }
-}
-
-/**
- ******************************************************************************
- * @brief		    获取节点的num属性
- * @param[in]       node     xml节点
- * @return                   失败返回 -1 成功返回 num
- * @details
- ******************************************************************************
- */
-static int get_cfg_num(xmlNodePtr node)
-{
-	//未找到IED_CFG节点
-	if(node == NULL) return -1;
-
-	int Num = 0;
-	xmlChar* szAttr = xmlGetProp(node,BAD_CAST "num"); 	
-	if(szAttr != NULL)
-	{
-		str2dec((char*)szAttr,&Num);
-		xmlFree(szAttr);
-	}
-
-
-	return Num;
-}
 
 /**
  ******************************************************************************
@@ -616,7 +468,7 @@ static int rh_point_list_load(const char *szFile)
 			reversecpy((unsigned char*)&s_pointMap.id_list.pItem[idNum].id,(unsigned char*)&id,4);
 			xmlFree(szAttrId);
 
-			//printf("id = %08x\n",s_pointMap.id_list.pItem[idNum].id);
+			printf("id = %08x\n",s_pointMap.id_list.pItem[idNum].id);
 			idNum++;
 		}
 	}
@@ -1442,7 +1294,7 @@ int rh_mem_data_write_oop(unsigned short nPn,unsigned int nDi,void *data,int dat
 	if(i >= pMapList->nNum) return -1;
 	
 	IED_LIST_T* pied= &pMapList->pIedList[i];
-	printf("find the ied\n");
+	printf("find the ied id = %08x nnUM = %d\n",nDi,pointList->id_list.nNum);
 
 	//获取ID list
 	
@@ -1570,7 +1422,7 @@ int rh_mem_data_read_oop(unsigned short nPn,unsigned int nDi,void *data,int data
 	//开始写数据
 	pthread_mutex_lock(pied->lock);
 
-	if(datalen <pDotType->dataLen) 
+	if(datalen < pDotType->dataLen) 
 	{
 	    smallcpy(data,(void*)((unsigned char *)s_pDataMem+pDo->offset+pDotType->offset),datalen);
 	}
@@ -1581,7 +1433,7 @@ int rh_mem_data_read_oop(unsigned short nPn,unsigned int nDi,void *data,int data
 	
 	pthread_mutex_unlock(pied->lock);
 
-	return datalen;
+	return pDotType->dataLen;
 }
 
 /**
@@ -1710,8 +1562,6 @@ int rh_mem_data_write_iec(unsigned char dataType,int addr_start,int nNum,void *d
 
 	smallcpy((void*)((unsigned char*)s_pDataMem+pDo->offset+pDotType->offset),data,datalen);
 	
-	pthread_mutex_unlock(pied->lock);
-
 	
 	pthread_mutex_unlock(pList->lock);
 	return 0;
@@ -1897,6 +1747,12 @@ int rh_mem_init( void )
 	{
 		return -1;
 	}
+
+	memset(s_pDataMem,0x00,malloc_len);
+
+	printf("s_pDataMem = %d\n",(int)s_pDataMem);
+	
+	el_dbase_init();
 	
 	return 0;
 }

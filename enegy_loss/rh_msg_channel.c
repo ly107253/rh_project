@@ -140,7 +140,7 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 	
 	for(time = 0; time < nWaittime;time++)
 	{		
-		printf("waiting sending.....(%02x)\n",pMem->head.state);
+		printf("waiting sending....time(%d) nWaittime(%d).(%02x)\n",time,nWaittime,pMem->head.state);
 		
 		sleep(1);
 		
@@ -168,7 +168,7 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 	{
 		sleep(1);
 
-		printf("waint recv state = %02x sync = %d %s %s\n",pMem->head.state,pMem->head.sync,pMem->head.szDest,szSrc);
+		printf("waint recv state = %02x %s %s time(%d) nWaittime(%d)\n",pMem->head.state,pMem->head.szDest,szSrc,time,nWaittime);
 		
 		if( pMem->head.state != MSG_ACK ) continue;
 		if( !pMem->head.sync ) continue;	

@@ -15,7 +15,6 @@ typedef enum
 	METER_LEV_MAX
 }METER_LEVEL_E;
 	
-//extern 	OOP_METER_T 			  g_ParaMet[MAX_MET_NUM];
 
 
 #define EMPTY_METER(metid)         (g_ParaMet[metid].basic.port.value == 0)
@@ -100,12 +99,18 @@ typedef struct tag_OOP_METER
 }OOP_METER_T;
 
 
+extern 	OOP_METER_T 			  g_ParaMet[MAX_MET_NUM];
 
+void meter_data_init( void );
+
+int meter_para_load( const char *szFile );
+
+unsigned char meter_level_check( unsigned short metid);
+
+void meter_data_update( void );
 
 unsigned int el_ene_get(     unsigned char level,unsigned char nPhase);
 
-
-void meter_data_update( void );
 
 #endif
 

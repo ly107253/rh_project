@@ -5,12 +5,6 @@
 #include <pthread.h> 
 
 
-typedef int BOOL;
-
-#define    MAX_METER     512
-
-#define TRUE    1
-#define FALSE   0
 
 #define MAX_NAME_LEN       (64)
 

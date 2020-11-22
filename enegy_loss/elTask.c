@@ -1,41 +1,16 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <time.h>
+#include <unistd.h>
 #include <string.h>
 #include "elTask.h"
 #include "elMeter.h"
 #include "elDbase.h"
 #include "elCommon.h"
 #include "rh_msg_channel.h"
+#include "dbase_msg_interface.h"
 
 static EL_STATES_T  elStatis[METER_LEV_MAX];
-
-
-#ifndef utime_t
-#define utime_t				unsigned int			// 从2000.1.1 0:0 开始的秒数
-#endif
-
-#ifndef SECS1970TO2000
-#define SECS1970TO2000		0x386D4380		// 1970.1.1 0:0:0到2000.1.1 0:0:0的秒数946684800((30*365+7)*24*3600)
-#endif
-
-#define TIMEZONESECS 28800
-
-/**
-*********************************************************************
-* @brief       获取系统秒数
-* @return      系统秒数
-* @note        无
-* @warning     无
-*********************************************************************
-*/
-utime_t sys_time_get(void)
-{
-	time_t curtime = time(NULL);
-	curtime -= SECS1970TO2000;
-	curtime += TIMEZONESECS;
-	return (utime_t)curtime;
-}
 
 
 static void el_statis_proc( void )
@@ -50,22 +25,24 @@ static void el_statis_proc( void )
 	{
 		for(nPhase = 0; nPhase < EL_MAX_PHASES;nPhase++)
 		{
+			//获取下一层级分相电能
+			enesup = el_ene_get(level,nPhase);
+			if(enesup < 0)
+			{
+				return;
+			}
+
 			//获取当前层级分相电能
-			enesal = el_ene_get(level,nPhase);
+			enesal = el_ene_get(level+1,nPhase);
 			if(enesal < 0)
 			{
 				return;
 			}
-
-			//获取下一层级分相电能
-			enesup = el_ene_get(level+1,nPhase);
-			if(enesup <= 0)
-			{
-				return;
-			}
-
+			
 			//计算当前层级线损率			
 			elT = ((float)( enesup - enesal )/enesup)*100;
+
+			printf("level = %d phase = %d enesal = %d enesup = %d elT= %d\n",level,nPhase,enesal,enesup,elT);
 			
 			elStatis[level].nVal[nPhase].nRatio = elT;
 			elStatis[level].nVal[nPhase].eneSal = enesal;
@@ -77,9 +54,50 @@ static void el_statis_proc( void )
 	
 }
 
-void el_statis_save( void )
-{
-	//待定
+static void el_statis_save( void )
+{	
+	unsigned short metid = 0;
+	unsigned char level  = 0;
+	unsigned char met_level = 0;
+	unsigned char  nPhase = 0;
+		
+	for(level = 0; level < METER_LEV_MAX;level++)
+	{
+		for(metid = 0; metid < MAX_MET_NUM;metid++)
+		{
+			if(EMPTY_METER(metid)) continue;
+
+			//查找设备level和当前level的第一个设备
+			met_level = meter_level_check(metid);
+			if(met_level >= METER_LEV_MAX) continue;
+
+			if(level == met_level) break;
+		}
+
+		if(metid >= MAX_MET_NUM)
+		{
+			continue;
+		}
+		
+		for(nPhase = 0; nPhase < EL_MAX_PHASES;nPhase++)
+		{
+			//写供电量
+			el_write_data(metid,ID_IBJ_60510201,(unsigned char*)&elStatis[level].nVal[nPhase].eneSup, 4);
+			//写售电量
+			el_write_data(metid,ID_IBJ_60510202,(unsigned char*)&elStatis[level].nVal[nPhase].eneSal, 4);
+			//写倒送电量
+			el_write_data(metid,ID_IBJ_60510203,(unsigned char*)&elStatis[level].nVal[nPhase].eneDeliv, 4);
+			//写分布式电源上网电量
+			el_write_data(metid,ID_IBJ_60510204,(unsigned char*)&elStatis[level].nVal[nPhase].eneDistrpwrnet, 4);
+			//写线损率
+			el_write_data(metid,ID_IBJ_60510205,(unsigned char*)&elStatis[level].nVal[nPhase].nRatio, 2);
+			//写异常标志
+			el_write_data(metid,ID_IBJ_60510206,(unsigned char*)&elStatis[level].nVal[nPhase].abnorFlag, 1);
+		}
+
+		
+	}
+
 }
 
 void el_statis_init( void )
@@ -89,59 +107,31 @@ void el_statis_init( void )
 
 static void* elTaskProc(void *arg)
 {
-	utime_t now  = 0;
-	utime_t last = 0;
-
-	BOOL bMin    = FALSE;	
-	BOOL b15Min  = FALSE;
-	BOOL bHour	 = FALSE;
-	BOOL bDay    = FALSE;
-
-	last = sys_time_get();
+	static int nTicks = 0;
 
 	while(1)
 	{		
-		now = sys_time_get();	
-
-		/**>时间回调后重新计算*/
-		if( now < last )
+	
+		if ( nTicks > 60 )
 		{
-			last = now;
-		}
-		else if( (last/(3600*24)) != (now/(3600*24)) )
-		{
-			bDay   = TRUE;
-			
-			bMin   = TRUE;				
-			b15Min = TRUE;
-			bHour  = TRUE;
-			
-		}
-		else if((last/(60*60)) != (now/(60*60)))
-		{
-			bHour = TRUE;
-			b15Min = TRUE;
-			bMin   = TRUE;
-		}
-		else if((last/(60*15)) != (now/(60*15)))
-		{
-			b15Min = TRUE;
-			bMin   = TRUE;
-		}
-		else if( (last/60) != (now/60) )
-		{
-			bMin   = TRUE;	
-		}
-
-		if (b15Min)
-		{
+			printf("statis begin................................................\n");
 			//数据更新 
 			meter_data_update();
 
 			//线损统计
 			el_statis_proc();
-		}
 
+			//保存线损数据
+			el_statis_save();
+			
+			nTicks = 0;
+		}
+		
+		printf("eltask runing........ticks = %d\n",nTicks);
+
+		nTicks++;
+		
+		sleep(1);
 		
 	}
 
@@ -169,9 +159,18 @@ void el_task_init()
 
 void el_init( void )
 {
+	//初始化
+	meter_data_init();
+		
+	//档案参数加载
+	meter_para_load("/opt/app/meter.xml");
+	
 	//数据接收初始化
 	el_dbase_init();
 
+	//线损数据初始化
+	el_statis_init();
+	
 	//任务初始化
 	el_task_init();
 }
