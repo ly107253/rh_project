@@ -189,8 +189,7 @@ static void* elDbaseProc(void *arg)
 				}
 			}
 		}
-		printf("rhDbase runing.....\n");
-		sleep(1);
+		usleep(50*1000);
 	}
 
 	return NULL;

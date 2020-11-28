@@ -14,11 +14,11 @@ extern "C"
 /** @brief 6051(属性2)-线损计算数据*/
 typedef struct tag_OOP_LNLS_UNIT
 {
-	unsigned int	eneSup;			/**< 供电量*/
-	unsigned int	eneSal;			/**< 售电量*/
-	unsigned int	eneDeliv;		/**< 倒送电量*/
-	unsigned int	eneDistrpwrnet; /**< 分布式电源上网电量*/
-	short	        nRatio;			/**< 线损率*/
+	float	eneSup;			        /**< 供电量*/
+	float	eneSal;			        /**< 售电量*/
+	float	eneDeliv;		        /**< 倒送电量*/
+	float	eneDistrpwrnet;         /**< 分布式电源上网电量*/
+	float	nRatio;			        /**< 线损率*/
 	unsigned char   abnorFlag;		/**< 异常标记(enum)*/
 }EL_UNIT_T;
 

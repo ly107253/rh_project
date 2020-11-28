@@ -7,15 +7,28 @@
 
 int main( void )
 {	
-	unsigned char buf1[4]={0x03,0x00,0x00,0x00};	
-	unsigned char buf2[4]={0x02,0x00,0x00,0x00}; 
+	//unsigned char buf1[4]={0x03,0x00,0x00,0x00};	
+	//unsigned char buf2[4]={0x02,0x00,0x00,0x00}; 
 
+	float data1 = 3.3;
+	float data2 = 2.2;
 	
 	rh_mem_init();
 
-	rh_mem_data_write_oop(1,0x00110200,(void*)buf1,sizeof(buf1));
+	rh_mem_data_write_oop(1,0x00010000,(void*)&data1,sizeof(data1));
 	
-	rh_mem_data_write_oop(2,0x00110200,(void*)buf2,sizeof(buf2));
+	rh_mem_data_write_oop(2,0x00010000,(void*)&data2,sizeof(data2));
+
+	rh_mem_data_write_oop(1,0x00150000,(void*)&data1,sizeof(data1));
+	
+	rh_mem_data_write_oop(2,0x00150000,(void*)&data2,sizeof(data2));
+
+	rh_mem_data_write_oop(1,0x00290000,(void*)&data1,sizeof(data1));
+	
+	rh_mem_data_write_oop(2,0x00290000,(void*)&data2,sizeof(data2));
+
+	
+	
 
 //	data = 0;
 	
@@ -32,6 +45,10 @@ int main( void )
 
 	while(1)
 	{
+		rh_mem_data_read_oop(1,0x60510205,(void*)&data1,sizeof(data1));
+
+		printf("ÏßËðÂÊ = %f\n",data1);
+		
 		sleep(1);
 	}
 	

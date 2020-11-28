@@ -75,6 +75,8 @@ int el_write_data(unsigned short nPn,unsigned int id,unsigned char *buf,unsigned
 	pMsgSend.msg.tag.iid = IID_EL;
 	pMsgSend.msg.tag.iop = IOP_DBASE_WRITE;
 
+	printf("write nPn = %d id = %08x\n",nPn,id);
+	
 	nPos += xdr_add_uint16(&pMsgSend.msg.pValue[nPos],nPn);
 	nPos += xdr_add_uint32(&pMsgSend.msg.pValue[nPos],id);
 	nPos += xdr_add_OCTET_STRING(&pMsgSend.msg.pValue[nPos],buf,len);
@@ -148,9 +150,7 @@ static void* elDbaseProc(void *arg)
 					break;
 				}
 			}
-		}
-		
-		printf("dbase runing....\n");
+		}		
 
 		sleep(1);
 	}

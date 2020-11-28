@@ -26,7 +26,7 @@ typedef struct tag_OOP_ENERGY
 {
 	unsigned int        nNum;
 	unsigned int		rsv;
-	unsigned int        nValue[OOP_FULL_RATES];
+	float               nValue[OOP_FULL_RATES];
 }OOP_ENERGY_T;
 
 typedef struct tag_MET_ENERGY_BLOCK
@@ -103,13 +103,16 @@ extern 	OOP_METER_T 			  g_ParaMet[MAX_MET_NUM];
 
 void meter_data_init( void );
 
+void meter_data_update( void );
+
 int meter_para_load( const char *szFile );
+
+float el_ene_get(     unsigned char level,unsigned char nPhase);
 
 unsigned char meter_level_check( unsigned short metid);
 
-void meter_data_update( void );
 
-unsigned int el_ene_get(     unsigned char level,unsigned char nPhase);
+
 
 
 #endif

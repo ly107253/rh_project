@@ -1728,12 +1728,12 @@ int rh_mem_init( void )
 	//ERROR(SYS_RUN, "wwww rh_mem_init\r\n");
 
 	//加载遥信 遥测 遥脉点表
-	if(rh_point_list_load("/opt/app/meter.xml") < 0)
+	if(rh_point_list_load("/data/app/meter.xml") < 0)
 	{
 		return -1;
 	}
 	//获取内存长度
-	malloc_len = rh_mem_map_init("/opt/app/meter.xml");
+	malloc_len = rh_mem_map_init("/data/app/meter.xml");
 //	ERROR(SYS_RUN, "33333rh_mem_init  malloc_len=%d\r\n",malloc_len);
 	if( malloc_len < 0 )
 	{

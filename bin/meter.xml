@@ -129,10 +129,11 @@
 		</IED>
 		<IED name="电表1" tag="meter1" type="share" num="2" pn="1">
 			<do name="遥脉电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="184"/>
-			<do name="遥测电能量数据" tag="Meter_YC_Data" type="struct" dotype="Meter_Var_Data" len="72"/>
+			<do name="遥测电能量数据" tag="Meter_YC_Data" type="struct" dotype="Meter_Var_Data" len="156"/>
 		</IED>
-		<IED name="电表2" tag="meter2" type="share" num="1" pn="2">
+		<IED name="电表2" tag="meter2" type="share" num="2" pn="2">
 			<do name="遥脉电能量数据" tag="Meter_Pow_Data" type="struct" dotype="Pow_Data" len="184"/>
+			<do name="遥测电能量数据" tag="Meter_YC_Data" type="struct" dotype="Meter_Var_Data" len="156"/>
 		</IED>
 		<IED name="分支1" tag="endtermial1" type="share" num="2" pn="3">
 			<do name="分支遥信数据" tag="End_Term_YX" type="struct" dotype="End_Term_Data_YX" len="5"/>
@@ -220,7 +221,7 @@
 			<do name="故障指示动作" tag="Move_State_End_Term_YX" type="array" dotype="int8" dim="1" offset="3" len="1"/>
 			<do name="相电压有压状态" tag="Vol_Invalid_End_Term_YX" type="array" dotype="int8" dim="1" offset="4" len="1"/>
 		</doType>
-		<doType name="电表实时变量" tag="Meter_Var_Data" num="18">
+		<doType name="电表实时变量" tag="Meter_Var_Data" num="42">
 		    <do name="A相值" tag="PhA_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="0" len="4"/>
 			<do name="B相值" tag="PhB_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="4" len="4"/>
 			<do name="C相值" tag="PhC_Val_Meter_Var_Data" type="array" dotype="float" dim="1" offset="8" len="4"/>
@@ -238,10 +239,34 @@
 			<do name="总功率因数" tag="Fac_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="56" len="4"/>
 			<do name="A相功率因数" tag="Fac_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="60" len="4"/>
 			<do name="B相功率因数" tag="Fac_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="64" len="4"/>
-			<do name="C相功率因数" tag="Fac_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="68" len="4"/>
+			<do name="C相功率因数" tag="Fac_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="68" len="4"/>			
+			<do name="总供电量" tag="EL_Sup_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="72" len="4"/>
+			<do name="总售电量" tag="EL_Sal_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="76" len="4"/>
+			<do name="总倒送电量" tag="EL_Deliv_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="80" len="4"/>
+			<do name="总上网电量" tag="EL_Distrpwrnet_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="84" len="4"/>
+			<do name="总线损率" tag="EL_Ratio_Ph_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="88" len="4"/>
+			<do name="总异常标志" tag="EL_Flag_Ph_P_Meter_Var_Data" type="array" dotype="uint8" dim="1" offset="92" len="1"/>
+			<do name="A相供电量" tag="EL_Sup_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="93" len="4"/>
+			<do name="A相总售电量" tag="EL_Sal_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="97" len="4"/>
+			<do name="A相总倒送电量" tag="EL_Deliv_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="101" len="4"/>
+			<do name="A相总上网电量" tag="EL_Distrpwrnet_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="105" len="4"/>
+			<do name="A相总线损率" tag="EL_Ratio_PhA_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="109" len="4"/>
+			<do name="A相总异常标志" tag="EL_Flag_PhA_P_Meter_Var_Data" type="array" dotype="uint8" dim="1" offset="113" len="1"/>
+			<do name="B相供电量" tag="EL_Sup_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="114" len="4"/>
+			<do name="B相总售电量" tag="EL_Sal_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="118" len="4"/>
+			<do name="B相总倒送电量" tag="EL_Deliv_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="122" len="4"/>
+			<do name="B相总上网电量" tag="EL_Distrpwrnet_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="126" len="4"/>
+			<do name="B相总线损率" tag="EL_Ratio_PhB_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="130" len="4"/>
+			<do name="B相总异常标志" tag="EL_Flag_PhB_P_Meter_Var_Data" type="array" dotype="uint8" dim="1" offset="134" len="1"/>
+			<do name="C相供电量" tag="EL_Sup_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="135" len="4"/>
+			<do name="C相总售电量" tag="EL_Sal_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="139" len="4"/>
+			<do name="C相总倒送电量" tag="EL_Deliv_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="143" len="4"/>
+			<do name="C相总上网电量" tag="EL_Distrpwrnet_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="147" len="4"/>
+			<do name="C相总线损率" tag="EL_Ratio_PhC_P_Meter_Var_Data" type="array" dotype="float" dim="1" offset="151" len="4"/>
+			<do name="C相总异常标志" tag="EL_Flag_PhC_P_Meter_Var_Data" type="array" dotype="uint8" dim="1" offset="155" len="1"/>
 		</doType>
 	</DataTypeTempltes>
-	<ID_CFG num="76">
+	<ID_CFG num="100">
 		<do name="Meter_YC_Data" tag="PhA_Val_Meter_Var_Data" id="02010100"/>
 		<do name="Meter_YC_Data" tag="PhB_Val_Meter_Var_Data" id="02010200"/>
 		<do name="Meter_YC_Data" tag="PhC_Val_Meter_Var_Data" id="02010300"/>
@@ -260,6 +285,30 @@
 		<do name="Meter_YC_Data" tag="Fac_PhA_P_Meter_Var_Data" id="02060100" />
 		<do name="Meter_YC_Data" tag="Fac_PhB_P_Meter_Var_Data" id="02060200" />
 		<do name="Meter_YC_Data" tag="Fac_PhC_P_Meter_Var_Data" id="02060300" />
+		<do name="Meter_YC_Data" tag="EL_Sup_Ph_P_Meter_Var_Data" id="60510201" />
+		<do name="Meter_YC_Data" tag="EL_Sal_Ph_P_Meter_Var_Data" id="60510202" />
+		<do name="Meter_YC_Data" tag="EL_Deliv_Ph_P_Meter_Var_Data" id="60510203" />
+		<do name="Meter_YC_Data" tag="EL_Distrpwrnet_Ph_P_Meter_Var_Data" id="60510204" />
+		<do name="Meter_YC_Data" tag="EL_Ratio_Ph_P_Meter_Var_Data" id="60510205" />
+		<do name="Meter_YC_Data" tag="EL_Flag_Ph_P_Meter_Var_Data" id="60510206" />
+		<do name="Meter_YC_Data" tag="EL_Sup_PhA_P_Meter_Var_Data" id="61510201" />
+		<do name="Meter_YC_Data" tag="EL_Sal_PhA_P_Meter_Var_Data" id="61510202" />
+		<do name="Meter_YC_Data" tag="EL_Deliv_PhA_P_Meter_Var_Data" id="61510203" />
+		<do name="Meter_YC_Data" tag="EL_Distrpwrnet_PhA_P_Meter_Var_Data" id="61510204" />
+		<do name="Meter_YC_Data" tag="EL_Ratio_PhA_P_Meter_Var_Data" id="61510205" />
+		<do name="Meter_YC_Data" tag="EL_Flag_PhA_P_Meter_Var_Data" id="61510206" />
+		<do name="Meter_YC_Data" tag="EL_Sup_PhB_P_Meter_Var_Data" id="62510201" />
+		<do name="Meter_YC_Data" tag="EL_Sal_PhB_P_Meter_Var_Data" id="62510202" />
+		<do name="Meter_YC_Data" tag="EL_Deliv_PhB_P_Meter_Var_Data" id="62510203" />
+		<do name="Meter_YC_Data" tag="EL_Distrpwrnet_PhB_P_Meter_Var_Data" id="62510204" />
+		<do name="Meter_YC_Data" tag="EL_Ratio_PhB_P_Meter_Var_Data" id="62510205" />
+		<do name="Meter_YC_Data" tag="EL_Flag_PhB_P_Meter_Var_Data" id="62510206" />
+		<do name="Meter_YC_Data" tag="EL_Sup_PhC_P_Meter_Var_Data" id="63510201" />
+		<do name="Meter_YC_Data" tag="EL_Sal_PhC_P_Meter_Var_Data" id="63510202" />
+		<do name="Meter_YC_Data" tag="EL_Deliv_PhC_P_Meter_Var_Data" id="63510203" />
+		<do name="Meter_YC_Data" tag="EL_Distrpwrnet_PhC_P_Meter_Var_Data" id="63510204" />
+		<do name="Meter_YC_Data" tag="EL_Ratio_PhC_P_Meter_Var_Data" id="63510205" />
+		<do name="Meter_YC_Data" tag="EL_Flag_PhC_P_Meter_Var_Data" id="63510206" />
 		<do name="Meter_Pow_Data" tag="R0_PW_Cur_Pow_Data" id="00010000"/>
 		<do name="Meter_Pow_Data" tag="R1_PW_Cur_Pow_Data" id="00010100"/>
 		<do name="Meter_Pow_Data" tag="R2_PW_Cur_Pow_Data" id="00010200"/>
@@ -300,12 +349,12 @@
 		<do name="Meter_Pow_Data" tag="R2_RQ_Fro_Pow_Data" id="56140200"/>
 		<do name="Meter_Pow_Data" tag="R3_RQ_Fro_Pow_Data" id="56140300"/>
 		<do name="Meter_Pow_Data" tag="R4_RQ_Fro_Pow_Data" id="56140400"/>
-		<do name="Meter_Pow_Data" tag="A_PW_Fro_Pow_Data" id="00110200"/>
-		<do name="Meter_Pow_Data" tag="B_PW_Fro_Pow_Data" id="00120200"/>
-		<do name="Meter_Pow_Data" tag="C_PW_Fro_Pow_Data" id="00130200"/>
-		<do name="Meter_Pow_Data" tag="A_RW_Fro_Pow_Data" id="00210200"/>
-		<do name="Meter_Pow_Data" tag="B_RW_Fro_Pow_Data" id="00220200"/>
-		<do name="Meter_Pow_Data" tag="C_RW_Fro_Pow_Data" id="00230200"/>
+		<do name="Meter_Pow_Data" tag="A_PW_Fro_Pow_Data" id="00150000"/>
+		<do name="Meter_Pow_Data" tag="B_PW_Fro_Pow_Data" id="00290000"/>
+		<do name="Meter_Pow_Data" tag="C_PW_Fro_Pow_Data" id="003D0000"/>
+		<do name="Meter_Pow_Data" tag="A_RW_Fro_Pow_Data" id="00160000"/>
+		<do name="Meter_Pow_Data" tag="B_RW_Fro_Pow_Data" id="002A0000"/>
+		<do name="Meter_Pow_Data" tag="C_RW_Fro_Pow_Data" id="003E0000"/>
 		<do name="End_Term_YC" tag="Phase_Vol_End_Term_YC" id="DD020000"/>
 		<do name="End_Term_YC" tag="Phase_Amp_End_Term_YC" id="DD020100"/>
 		<do name="End_Term_YC" tag="Phase_W_End_Term_YC" id="DD020200"/>

@@ -16,33 +16,52 @@ static EL_STATES_T  elStatis[METER_LEV_MAX];
 static void el_statis_proc( void )
 {
 	unsigned char nPhase = 0;
-	unsigned char level  = 0;
-	int          elT;
-	unsigned int enesal;
-	unsigned int enesup;
+	unsigned char level  = 0;	
+	unsigned char met_level = 0;
+	unsigned short metid= 0;
+	float elT = 0.0;
+	float enesal = 0.0;
+	float enesup = 0.0;
 
 	for(level= 0; level < METER_LEV_MAX;level++)
 	{
 		for(nPhase = 0; nPhase < EL_MAX_PHASES;nPhase++)
 		{
-			//获取下一层级分相电能
-			enesup = el_ene_get(level,nPhase);
-			if(enesup < 0)
+			//判断当前层级是否有下一层级设备
+			for(metid = 0; metid < MAX_MET_NUM;metid++)
 			{
-				return;
+				if(EMPTY_METER(metid)) continue;
+
+				//查找层级为level+1的设备
+				met_level = meter_level_check(metid);
+
+				//找到低层级设备
+				if((level+1) == met_level) break;
 			}
 
-			//获取当前层级分相电能
+			if(metid >= MAX_MET_NUM)
+			{
+				continue;
+			}
+			
+			//获取当前层级分相电能			
+			enesup = el_ene_get(level,nPhase);
+			if(enesup <= 0)
+			{
+				continue;
+			}
+
+			//获取下一层级分相电能
 			enesal = el_ene_get(level+1,nPhase);
 			if(enesal < 0)
 			{
-				return;
+				continue;
 			}
 			
 			//计算当前层级线损率			
-			elT = ((float)( enesup - enesal )/enesup)*100;
+			elT = (( enesup - enesal )/enesup)*100;
 
-			printf("level = %d phase = %d enesal = %d enesup = %d elT= %d\n",level,nPhase,enesal,enesup,elT);
+			printf("level = %d phase = %d enesal = %f enesup = %f elT= %f\n",level,nPhase,enesal,enesup,elT);
 			
 			elStatis[level].nVal[nPhase].nRatio = elT;
 			elStatis[level].nVal[nPhase].eneSal = enesal;
@@ -82,17 +101,17 @@ static void el_statis_save( void )
 		for(nPhase = 0; nPhase < EL_MAX_PHASES;nPhase++)
 		{
 			//写供电量
-			el_write_data(metid,ID_IBJ_60510201,(unsigned char*)&elStatis[level].nVal[nPhase].eneSup, 4);
+			el_write_data(metid,ID_IBJ_60510201|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].eneSup, 4);
 			//写售电量
-			el_write_data(metid,ID_IBJ_60510202,(unsigned char*)&elStatis[level].nVal[nPhase].eneSal, 4);
+			el_write_data(metid,ID_IBJ_60510202|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].eneSal, 4);
 			//写倒送电量
-			el_write_data(metid,ID_IBJ_60510203,(unsigned char*)&elStatis[level].nVal[nPhase].eneDeliv, 4);
+			el_write_data(metid,ID_IBJ_60510203|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].eneDeliv, 4);
 			//写分布式电源上网电量
-			el_write_data(metid,ID_IBJ_60510204,(unsigned char*)&elStatis[level].nVal[nPhase].eneDistrpwrnet, 4);
+			el_write_data(metid,ID_IBJ_60510204|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].eneDistrpwrnet, 4);
 			//写线损率
-			el_write_data(metid,ID_IBJ_60510205,(unsigned char*)&elStatis[level].nVal[nPhase].nRatio, 2);
+			el_write_data(metid,ID_IBJ_60510205|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].nRatio, 4);
 			//写异常标志
-			el_write_data(metid,ID_IBJ_60510206,(unsigned char*)&elStatis[level].nVal[nPhase].abnorFlag, 1);
+			el_write_data(metid,ID_IBJ_60510206|(nPhase << 24),(unsigned char*)&elStatis[level].nVal[nPhase].abnorFlag, 1);
 		}
 
 		
@@ -114,15 +133,25 @@ static void* elTaskProc(void *arg)
 	
 		if ( nTicks > 60 )
 		{
-			printf("statis begin................................................\n");
+			printf("meter_data_update begin...........................\n");
 			//数据更新 
 			meter_data_update();
+			
+			printf("meter_data_update end...........................\n");
 
 			//线损统计
+			printf("el_statis_proc begin...........................\n");
+
 			el_statis_proc();
+			
+			printf("el_statis_proc end...........................\n");
 
 			//保存线损数据
+			printf("el_statis_save begin...........................\n");
+			
 			el_statis_save();
+			
+			printf("el_statis_save end...........................\n");
 			
 			nTicks = 0;
 		}
@@ -163,7 +192,7 @@ void el_init( void )
 	meter_data_init();
 		
 	//档案参数加载
-	meter_para_load("/opt/app/meter.xml");
+	meter_para_load("/data/app/meter.xml");
 	
 	//数据接收初始化
 	el_dbase_init();

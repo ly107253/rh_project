@@ -17,14 +17,14 @@ MET_ENERGY_BLOCK_T	      s_UserMetData[METER_LEV_MAX];
 
 static const unsigned int DI_ENERGY[] = 
 {
-	0x00100200, // 正有
-	0x00110200, // A相正有
-	0x00120200, // B相正有
-	0x00130200, // C相正有
-	0x00200200, // 反有
-	0x00210200, // A相正有
-	0x00220200, // B相正有
-	0x00230200, // C相正有
+	0x00010000, // 正有
+	0x00150000, // A相正有
+	0x00290000, // B相正有
+	0x003D0000, // C相正有
+	0x00020000, // 反有
+	0x00160000, // A相反有
+	0x002A0000, // B相反有
+	0x003E0000, // C相反有
 };
 
 
@@ -215,7 +215,7 @@ void meter_data_update( void )
 	int nRet = 0;
 	unsigned char  level = 0;
 	unsigned short metid = 0;
-	unsigned int   data = 0;
+	float   data = 0.0;
 	
 	for(metid = 0; metid < MAX_MET_NUM;metid++)
 	{
@@ -230,62 +230,62 @@ void meter_data_update( void )
 		nRet = el_read_data(metid,DI_ENERGY[0],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data1  = %d\n",data);
+			printf("data1  = %f\n",data);
 			s_UserMetData[level].enepaT.nValue[0] += data;
 		}
 		
 		nRet = el_read_data(metid,DI_ENERGY[1],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data2  = %d\n",data);
+			printf("data2  = %f\n",data);
 			s_UserMetData[level].enepaA.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[2],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data3  = %d\n",data);
+			printf("data3  = %f\n",data);
 			s_UserMetData[level].enepaB.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[3],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data4  = %d\n",data);
+			printf("data4  = %f\n",data);
 			s_UserMetData[level].enepaC.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[4],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data5  = %d\n",data);
+			printf("data5  = %f\n",data);
 			s_UserMetData[level].enenaT.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[5],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data6  = %d\n",data);
+			printf("data6  = %f\n",data);
 			s_UserMetData[level].enenaA.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[6],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data7  = %d\n",data);
+			printf("data7  = %f\n",data);
 			s_UserMetData[level].enenaB.nValue[0] += data;
 		}
 
 		nRet = el_read_data(metid,DI_ENERGY[7],(unsigned char*)&data,sizeof(data));
 		if(nRet > 0)
 		{
-			printf("data8  = %d\n",data);
+			printf("data8  = %f\n",data);
 			s_UserMetData[level].enenaC.nValue[0] += data;
 		}
 	}
 }
 
-unsigned int el_ene_get(     unsigned char level,unsigned char nPhase)
+float el_ene_get(     unsigned char level,unsigned char nPhase)
 {
 	if(nPhase == 0)
 	{
