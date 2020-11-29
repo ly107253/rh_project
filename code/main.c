@@ -43,12 +43,27 @@ int main( void )
 	
 	//printf("addr = %d\n",addr);
 
+	int nTick = 0;
+
 	while(1)
 	{
 		rh_mem_data_read_oop(1,0x60510205,(void*)&data1,sizeof(data1));
 
 		printf("ÏßËðÂÊ = %f\n",data1);
-		
+
+		if(nTick > 70)
+		{
+			float data1 = 4.4;
+			float data2 = 3.0;
+
+			rh_mem_data_write_oop(1,0x00010000,(void*)&data1,sizeof(data1));
+	
+			rh_mem_data_write_oop(2,0x00010000,(void*)&data2,sizeof(data2));
+
+			nTick = 0;
+		}
+
+		nTick++;
 		sleep(1);
 	}
 	

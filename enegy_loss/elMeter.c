@@ -11,7 +11,10 @@
 
 OOP_METER_T               g_ParaMet[MAX_MET_NUM];
 
-MET_ENERGY_BLOCK_T	      s_UserMetData[METER_LEV_MAX];
+MET_ENERGY_BLOCK_T	      s_EneUseUp[METER_LEV_MAX];       // 消耗电量
+
+MET_ENERGY_BLOCK_T        s_MetData[MAX_MET_NUM];           //用户电能示值
+MET_ENERGY_BLOCK_T        s_MetDataBak[MAX_MET_NUM];        //备份用户电能示值
 
 
 
@@ -205,17 +208,56 @@ unsigned char meter_level_check( unsigned short metid)
 
 void meter_data_init( void )
 {
-	memset(s_UserMetData,0x00,sizeof(s_UserMetData));
+	memset(s_EneUseUp,0x00,sizeof(s_EneUseUp));
+	memset(s_MetData,0x00,sizeof(s_MetData));
+	memset(s_MetDataBak,0x00,sizeof(s_MetDataBak));
 	memset(g_ParaMet,0x00,sizeof(g_ParaMet));
 }
 
+//返回本次用电量
+static float meter_ene_update(float *pCurEne,float *pBakEne)
+{
+	float eneUseup = 0.0;
+	int eneCur = 0;
+	int eneBak = 0;
+	
+	printf("pCurEne = %f pBakEne = %f\n",*pCurEne,*pBakEne);
+
+	if((pCurEne == NULL) || (pBakEne == NULL)) return eneUseup;
+
+	//取小数位后两位
+	eneCur = (int)((*pCurEne)*100);
+	eneBak = (int)((*pBakEne)*100);
+	
+	if(eneCur < eneBak) return eneUseup;
+
+	//第一次抄读 
+	if(eneBak == 0) 
+	{		
+		//备份电量
+		*pBakEne = *pCurEne;
+
+		return eneUseup;
+	}
+	
+
+	//计算本次用电量
+	printf("eneCur = %d eneBak = %d\n",eneCur,eneBak);
+	eneUseup = (float)(eneCur-eneBak)/100;
+
+	//备份电量
+	*pBakEne = *pCurEne;
+
+	printf("eneUseup = %f\n",eneUseup);
+	
+	return eneUseup;
+}
 
 void meter_data_update( void )
 {
 	int nRet = 0;
 	unsigned char  level = 0;
 	unsigned short metid = 0;
-	float   data = 0.0;
 	
 	for(metid = 0; metid < MAX_MET_NUM;metid++)
 	{
@@ -227,60 +269,60 @@ void meter_data_update( void )
 
 		printf("metid = %d level = %d\n",metid,level);
 		
-		nRet = el_read_data(metid,DI_ENERGY[0],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[0],(unsigned char*)&s_MetData[metid].enepaT.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data1  = %f\n",data);
-			s_UserMetData[level].enepaT.nValue[0] += data;
+			printf("data1  = %f\n",s_MetData[metid].enepaT.nValue[0]);
+			s_EneUseUp[level].enepaT.nValue[0] += meter_ene_update(&s_MetData[metid].enepaT.nValue[0],&s_MetDataBak[metid].enepaT.nValue[0]);
 		}
 		
-		nRet = el_read_data(metid,DI_ENERGY[1],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[1],(unsigned char*)&s_MetData[metid].enepaA.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data2  = %f\n",data);
-			s_UserMetData[level].enepaA.nValue[0] += data;
+			printf("data2  = %f\n",s_MetData[metid].enepaA.nValue[0]);
+			s_EneUseUp[level].enepaA.nValue[0] += meter_ene_update(&s_MetData[metid].enepaA.nValue[0],&s_MetDataBak[metid].enepaA.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[2],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[2],(unsigned char*)&s_MetData[metid].enepaB.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data3  = %f\n",data);
-			s_UserMetData[level].enepaB.nValue[0] += data;
+			printf("data3  = %f\n",s_MetData[metid].enepaB.nValue[0]);
+			s_EneUseUp[level].enepaB.nValue[0] += meter_ene_update(&s_MetData[metid].enepaB.nValue[0],&s_MetDataBak[metid].enepaB.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[3],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[3],(unsigned char*)&s_MetData[metid].enepaC.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data4  = %f\n",data);
-			s_UserMetData[level].enepaC.nValue[0] += data;
+			printf("data4  = %f\n",s_MetData[metid].enepaC.nValue[0]);
+			s_EneUseUp[level].enepaC.nValue[0] += meter_ene_update(&s_MetData[metid].enepaC.nValue[0],&s_MetDataBak[metid].enepaC.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[4],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[4],(unsigned char*)&s_MetData[metid].enenaT.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data5  = %f\n",data);
-			s_UserMetData[level].enenaT.nValue[0] += data;
+			printf("data5  = %f\n",s_MetData[metid].enenaT.nValue[0]);
+			s_EneUseUp[level].enenaT.nValue[0] += meter_ene_update(&s_MetData[metid].enenaT.nValue[0],&s_MetDataBak[metid].enenaT.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[5],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[5],(unsigned char*)&s_MetData[metid].enenaA.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data6  = %f\n",data);
-			s_UserMetData[level].enenaA.nValue[0] += data;
+			printf("data6  = %f\n",s_MetData[metid].enenaA.nValue[0]);
+			s_EneUseUp[level].enenaA.nValue[0] += meter_ene_update(&s_MetData[metid].enenaA.nValue[0],&s_MetDataBak[metid].enenaA.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[6],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[6],(unsigned char*)&s_MetData[metid].enenaB.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data7  = %f\n",data);
-			s_UserMetData[level].enenaB.nValue[0] += data;
+			printf("data7  = %f\n",s_MetData[metid].enenaB.nValue[0]);
+			s_EneUseUp[level].enenaB.nValue[0] += meter_ene_update(&s_MetData[metid].enenaB.nValue[0],&s_MetDataBak[metid].enenaB.nValue[0]);
 		}
 
-		nRet = el_read_data(metid,DI_ENERGY[7],(unsigned char*)&data,sizeof(data));
+		nRet = el_read_data(metid,DI_ENERGY[7],(unsigned char*)&s_MetData[metid].enenaC.nValue[0],sizeof(float));
 		if(nRet > 0)
 		{
-			printf("data8  = %f\n",data);
-			s_UserMetData[level].enenaC.nValue[0] += data;
+			printf("data8  = %f\n",s_MetData[metid].enenaC.nValue[0]);
+			s_EneUseUp[level].enenaC.nValue[0] += meter_ene_update(&s_MetData[metid].enenaC.nValue[0],&s_MetDataBak[metid].enenaC.nValue[0]);
 		}
 	}
 }
@@ -289,19 +331,19 @@ float el_ene_get(     unsigned char level,unsigned char nPhase)
 {
 	if(nPhase == 0)
 	{
-		return s_UserMetData[level].enepaT.nValue[0];
+		return s_EneUseUp[level].enepaT.nValue[0];
 	}
 	else if(nPhase == 1)
 	{
-		return s_UserMetData[level].enepaA.nValue[0];
+		return s_EneUseUp[level].enepaA.nValue[0];
 	}
 	else if(nPhase ==2)
 	{
-		return s_UserMetData[level].enepaB.nValue[0];
+		return s_EneUseUp[level].enepaB.nValue[0];
 	}
 	else if(nPhase ==3)
 	{
-		return s_UserMetData[level].enepaC.nValue[0];
+		return s_EneUseUp[level].enepaC.nValue[0];
 	}
 
 	return -1;

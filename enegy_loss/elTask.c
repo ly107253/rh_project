@@ -192,7 +192,7 @@ void el_init( void )
 	meter_data_init();
 		
 	//档案参数加载
-	meter_para_load("/data/app/meter.xml");
+	meter_para_load("/opt/app/meter.xml");
 	
 	//数据接收初始化
 	el_dbase_init();

@@ -8,6 +8,13 @@
 
 static pthread_mutex_t* s_lock;			// 设备数据读写同步锁
 
+
+//休眠单位 ms
+void SmSleep(unsigned int tick)
+{
+	usleep(tick*1000);	
+}
+
 void SmMutexInit( void )
 {
 	s_lock = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
@@ -135,14 +142,15 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 	}
 	
 	//检查是否可以发消息
-
+	nWaittime *= 1000;
+	
 	printf("Msg Send Begin.....\n");
 	
-	for(time = 0; time < nWaittime;time++)
+	for(time = 0; time < nWaittime;time+=100)
 	{		
 		printf("waiting sending....time(%d) nWaittime(%d).(%02x)\n",time,nWaittime,pMem->head.state);
 		
-		sleep(1);
+		SmSleep(100);
 		
 		if( pMem->head.state != MSG_IDLE ) continue;
 
@@ -164,9 +172,9 @@ int SmMsgSendWait(const char * szSrc,unsigned int keyid,RH_MSG_BUFFER_T *pMsg, R
 	printf("time = %d nWaittime = %d\n",time,nWaittime);
 	
 	//检查消息是否返回
-	for(;time < nWaittime;time++)
+	for(;time < nWaittime;time += 100)
 	{
-		sleep(1);
+		SmSleep(100);
 
 		printf("Waiting recv state = %02x %s %s time(%d) nWaittime(%d)\n",pMem->head.state,pMem->head.szDest,szSrc,time,nWaittime);
 		
